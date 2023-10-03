@@ -186,7 +186,12 @@
 本品は実験用のツールです。これを悪用して起こったいかなる損害にも、当方は責任を負いかねます。<br>
 <b>[追記 2022/12/05]</b> <br>更新間隔制限解除&ドメイン制限解除&XMLHttpRequest_GET/POST追加&キャッシュ無効化<br>
 <b>[留意点]</b><br><mark>WindowsではEdge、他はchromeが一番高効率です</mark><br>更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。</br>
-<b><u><font color="red">[撃つ前に]</font></u></b> <br><mark>XMLHttpRequestを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windowsの方はページ下の説明に従ってください。Android/iosでchromeを使用している場合はそのまま撃てます。</mark></br>
+<b><u><font color="red">[撃つ前に]</font></u></b> <br><mark>XMLHttpRequestを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windowsの方はページ最下部の説明に従ってください。<strong>Android/ios</strong>でchromeを使用している場合はそのまま撃てます。</mark></br>
+
+<b>[従来版の田代]</b>
+<br>
+<a href="https://rifurekusyon.github.io/tornado.github.io/index-mobile.html">従来版はこちら</a>
+※ただしスループットは低いです。
 <br>
 <div style="text-align: center; padding: 10px; margin-bottom: 10px; border: 5px double #333333; border-radius: 10px;">
 <form name="m_form1">
@@ -199,7 +204,7 @@
 【同時更新数】（窓数）<br>
 <input class="css-button-rounded--black" type="text" size="10" name="m_tbWinNum" value="20"><br>
 <br>
-<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。<br>同時起動可能ですがデバイスの性能によってはフリーズすることがあります。<mark></strong>
+<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。<br>開始2は多重起動可能ですがデバイスの性能によってはフリーズすることがあります。<mark></strong>
 <br><br>
 <input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb();"> <br>
 <br>
