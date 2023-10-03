@@ -119,6 +119,10 @@
 <b>[追記 2022/12/05]</b> <br>更新間隔制限解除&ドメイン制限解除&XMLHttpRequest_GET/POST追加&キャッシュ無効化<br>
 <b>[留意点]</b> <br>更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。</br>
 <b>[撃つ前に]</b> <br><mark>XMLHttpRequestを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。Windowsの方は下記に従ってください。Androidでchromeを使用している場合はそのまま撃てます。</mark></br>
+<b><mark>[Edge推奨][Edgeの場合]</mark></b>
+<br>"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --disable-web-security --user-data-dir=C:\Windows\Temp https://rifurekusyon.github.io/tornado.github.io/</br>
+<br>とコマンドプロンプトに入力。※ブラウザを閉じれば設定は元に戻ります。</br>
+<br>
 <b>[Chromeの場合]</b><br>コマンドプロンプトを開いて</br><br>"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/</br>
 <br>又は</br><br>"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/</br>
 <br>と入力。※ブラウザを閉じれば設定は元に戻ります。</br>
@@ -128,10 +132,8 @@
 画面から以下2つの項目を設定する。</br>
 	<br>content.cors.disable：true</br>
 	security.fileuri.strict_origin_policy：false
+	<br>
 <br>その後再びこのサイトにアクセス。田代砲を使い終わったら設定を元に戻してください。</br>
-<b>[Edgeの場合]</b>
-<br>"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --disable-web-security --user-data-dir=C:\Windows\Temp https://rifurekusyon.github.io/tornado.github.io/</br>
-<br>とコマンドプロンプトに入力。※ブラウザを閉じれば設定は元に戻ります。</br>
 <br>
 <form name="m_form1">
 【対象】<br>
