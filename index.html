@@ -120,15 +120,17 @@
 <b>[Chromeの場合]</b><br>コマンドプロンプトを開いて</br><br>"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/</br>
 <br>又は</br><br>"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C://Chrome dev session" https://rifurekusyon.github.io/tornado.github.io/</br>
 <br>と入力してください</br>
+<br>
 <b>[Firefoxの場合]</b>
 <br>アドレスバーにabout:configと打ち込み、設定画面を表示する。警告画面が表示されるが、「危険を承知の上で使用する」というボタンを押下して続行。
 画面から以下2つの項目を設定する。</br>
 	<br>content.cors.disable：true</br>
-	<br>security.fileuri.strict_origin_policy：false</br>
+	security.fileuri.strict_origin_policy：false
+<br>
 <b>[Edgeの場合]</b>
 <br>"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --disable-web-security --user-data-dir=C:\Windows\Temp https://rifurekusyon.github.io/tornado.github.io/</br>
 <br>とコマンドプロンプトに入力。</br>
-	
+<br>
 <form name="m_form1">
 【対象】<br>
 <input type="text" name="m_tbUrl" size=60 value="http://192.168.11.1"><br>
