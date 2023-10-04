@@ -1,0 +1,90 @@
+<html>
+<head>
+<meta http-equiv="content-type">
+<meta http-equiv="content-style-type" content="text/css">
+<title>トルネード三式(modded)の性能</title>
+<h1>
+	【この田代の性能】
+</h1>
+<h2>
+	[実験環境(まともじゃな(ry)]
+</h2>
+<b>
+	[Server]
+</b>
+	<br>
+	・Nginx-1.24.0
+	<br>
+	・Windows11 22H2 Build: 22621.2283
+	<br>
+	・CPU: Core i7-1255U RAM: 16.0GB
+	<br>
+	・Network Adapter: Intel Wi-Fi 6E AX211 (IEEE 802.11ac接続)
+	<br>
+	・常に電源を接続
+	<br>
+	<b>
+	[client]
+ </b>
+ <br>
+	・OS: Android10
+	<br>
+	・Browser: Google_Chrome_Ver 117.0.5938.140
+	<br>
+	・CPU: Snapdragon 855
+	<br>
+	・RAM: 8GB ROM: 256GB
+	<br>
+	・IEEE 802.11ac接続
+	<br>
+	<b>
+		[Router]
+	</b>
+	<br>
+	・wsr-2533dhp3
+	<br>
+	<b>
+		[計測方法]
+	</b>
+	<br>
+	・WireShark4.0.7
+	<br>
+	<b>
+		[20000packet集めて得た結果。pps=パケット/秒]
+	</b>
+	<br>
+	(ここではServerが受信したhttpパケットの数)
+	<br>
+	・同時に起動する数を増やすとクラッシュする。
+	<br>
+	・実際のサイトではDDoSプロテクションに検知されるのでこのような結果は出ません。
+	<br>
+	<table border="2" style="border-collapse: collapse">
+  <tr>
+    <th>Method</th>
+    <th>result</th>
+  </tr>
+  <tr>
+   <td align="center">開始1+開始2(XML)</td>
+   <td align="center">82.5pps</td>
+  </tr>
+  <tr>
+    <td align="center">開始2(XML)+開始2(XML)</td>
+    <td align="center">88.9pps</td>
+  </tr>
+  <tr>
+  	<td align="center">開始1</td>
+  	<td align="center">53.1pps</td>
+  </tr>
+  <tr>
+  	<td align="center">開始2(XML)</td>
+  	<td align="center">73.0pps</td>
+  </tr>
+  <tr>
+  	<td align="center">開始2(XML)×4</td>
+  	<td align="center">202.3pps</td>
+  </tr>
+</table>
+
+</head>
+</html>
