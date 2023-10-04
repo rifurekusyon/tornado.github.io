@@ -6,6 +6,42 @@
 <h1>
 	【この田代の性能】
 </h1>
+		<b>
+		[20000packet集めて得た結果。pps=パケット/秒]
+	</b>
+	<br>
+	(ここではServerが受信したhttpパケットの数)
+	<br>
+	・同時に起動する数を増やすとクラッシュする。
+	<br>
+	・実際のサイトではDDoSプロテクションに検知されるのでこのような結果は出ません。
+	<br>
+	<table border="2" style="border-collapse: collapse">
+  <tr>
+    <th>Method</th>
+    <th>result</th>
+  </tr>
+  <tr>
+   <td align="center">開始1+開始2(XML)</td>
+   <td align="center">82.5pps</td>
+  </tr>
+  <tr>
+    <td align="center">開始2(XML)+開始2(XML)</td>
+    <td align="center">88.9pps</td>
+  </tr>
+  <tr>
+  	<td align="center">開始1</td>
+  	<td align="center">53.1pps</td>
+  </tr>
+  <tr>
+  	<td align="center">開始2(XML)</td>
+  	<td align="center">73.0pps</td>
+  </tr>
+  <tr>
+  	<td align="center">開始2(XML)×4</td>
+  	<td align="center">202.3pps</td>
+  </tr>
+</table>
 <h2>
 	[実験環境(まともじゃな(ry)]
 </h2>
@@ -49,42 +85,7 @@
 	<br>
 	・WireShark4.0.7
 	<br>
-	<b>
-		[20000packet集めて得た結果。pps=パケット/秒]
-	</b>
-	<br>
-	(ここではServerが受信したhttpパケットの数)
-	<br>
-	・同時に起動する数を増やすとクラッシュする。
-	<br>
-	・実際のサイトではDDoSプロテクションに検知されるのでこのような結果は出ません。
-	<br>
-	<table border="2" style="border-collapse: collapse">
-  <tr>
-    <th>Method</th>
-    <th>result</th>
-  </tr>
-  <tr>
-   <td align="center">開始1+開始2(XML)</td>
-   <td align="center">82.5pps</td>
-  </tr>
-  <tr>
-    <td align="center">開始2(XML)+開始2(XML)</td>
-    <td align="center">88.9pps</td>
-  </tr>
-  <tr>
-  	<td align="center">開始1</td>
-  	<td align="center">53.1pps</td>
-  </tr>
-  <tr>
-  	<td align="center">開始2(XML)</td>
-  	<td align="center">73.0pps</td>
-  </tr>
-  <tr>
-  	<td align="center">開始2(XML)×4</td>
-  	<td align="center">202.3pps</td>
-  </tr>
-</table>
+
 
 </head>
 </html>
