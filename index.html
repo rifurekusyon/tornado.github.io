@@ -144,7 +144,16 @@
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
 	}
-
+	
+	async function stopBomb_fetch()
+	{
+		clearTimeout(m_toDoing_fetch);
+		for(i = 0; i < count; i++) {
+			clearTimeout(m_toDoing_fetch);
+		}
+		document.all.m_taInfo.value += "\n\n";
+		document.all.m_taInfo.value += "～訪問を中止しました～";
+	}
 
 
 	function stopBomb()
@@ -152,9 +161,6 @@
 		clearTimeout(m_toDoing);
 		clearTimeout(m_toDoing_XML);
 		clearTimeout(m_toDoing_fetch);
-		for(i = 0; i < count; i++) {
-			clearTimeout(m_toDoing_fetch);
-		}
 		document.all.m_taInfo.value += "\n\n";
 		document.all.m_taInfo.value += "～訪問を中止しました～";
 	}
@@ -246,7 +252,7 @@
 <br>
 <strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。開始3はfetchを用いた田代。<br>多重起動可能ですがブラウザがクラッシュすることがあります。<br>強さは開始1＜開始2＜開始3<mark></strong>
 <br><br>
-<input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb();"> <br>
+<input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb_fetch();stopBomb()"> <br>
 <br>
 【情報】<br>
 <textarea class="css-button-rounded--black" id="m_taInfo" style="border:1px solid #000000;height:100px;width:70%;">※ここに情報が表示されます。</textarea>
