@@ -24,6 +24,7 @@
 	var xhr = new XMLHttpRequest();
 	var xhr2 = new XMLHttpRequest();
 	var count = "15";
+	var attackmode;
 
 	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
 
@@ -360,8 +361,10 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 				document.all.m_dvMado.appendChild(m_ifFrame[i]);
 			}
 			if(http_method==1) {
+				attackmode="HTTP_GET/POST"
 				modeselect(1);
 			} else if(http_method==2) {
+				attackmode="HTTP_GET"
 				modeselect(4);
 			} else if(http_method==3) {
 				alert("[エラー] 従来のiFrame型田代はHTTP_POST ONLYモードに対応していません。");
@@ -528,10 +531,13 @@ function goBomb_nowild_GET_ONLY()
 		m_inCount = 0;
 		wildcard_detect(postdata_from_user, m_stBomburl);
 		if(http_method==1) {
+			attackmode="HTTP_GET/POST"
 			modeselect(2);
 		} else if(http_method==2) {
+			attackmode="HTTP_GET"
 			modeselect(5);
 		} else if(http_method==3) {
+			attackmode="HTTP_POST"
 			modeselect(7);
 		} else {
 			alert("[エラー] 使用するHttp Requestの種類を選択してください。");
@@ -766,10 +772,13 @@ function goBomb_nowild_GET_ONLY()
 		m_inCount = 0;
 		wildcard_detect(postdata_from_user, m_stBomburl);
 		if(http_method==1) {
+			attackmode="HTTP_GET/POST"
 			modeselect(3);
 		} else if(http_method==2) {
+			attackmode="HTTP_GET"
 			modeselect(6);
 		} else if(http_method==3) {
+			attackmode="HTTP_POST"
 			modeselect(8);
 		} else {
 			alert("[エラー] 使用するHttp Requestの種類を選択してください。");
@@ -988,8 +997,9 @@ function goBomb_fetch_nowild_POST_ONLY()
 		var stInfoTmp;
 		m_inCount++;
 		stInfoTmp = "～訪問しています～\n";
-		stInfoTmp += "対象URL: " + urlconv1_url + "\n";
-		stInfoTmp += "POSTDATA: " + urlconv1 + "\n";
+		stInfoTmp += "モード  :" + attackmode + "\n";
+		stInfoTmp += "対象URL: " + convurl1_url(1) + "\n";
+		stInfoTmp += "POSTDATA: " + convurl(1) + "\n";
 		stInfoTmp += "回数　：" + m_inCount + "回\n";
 		stInfoTmp += "速度　：" + m_inInterval + "ms\n";
 		stInfoTmp += "砲門数：" + m_inWinNum + "門";
