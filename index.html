@@ -29,6 +29,8 @@
 	var contype = "application/x-www-form-urlencoded";
 	var accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
 	var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
+	var IsUrlVaild;
+	var IsPostdataVaild;
 
 	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
 
@@ -183,6 +185,12 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 					tl.push(tlt[tlc]);
 				}
     }
+    if(tl.length > 0) {
+    	IsPostdataVaild = 1
+    } else {
+    	alert("[エラー] POSTデータを入力してください。")
+    	IsPostdataVaild = 0
+    }
 		//ここまで--------------------------------------
 		//wildcardの処理(対象URL)-----------------------------------
 		if(document.m_form1.wcc_url.checked) {
@@ -198,8 +206,14 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 					tl_url.push(tlt_url[tlc_url]);
 				}
 			}
+			if(tl_url.length > 0) {
+				IsUrlVaild = 1
+			} else {
+				alert("[エラー] 対象URLを入力してください。")
+    		IsUrlVaild = 0
+			}
 		//ここまで---------------------------------------------------
-		return [wch, wch_url, tl, tl_url]
+		return [wch, wch_url, tl, tl_url, IsUrlVaild, IsPostdataVaild]
 	}
 
 	function modeselect(mode) {
@@ -336,7 +350,11 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 		http_method = document.m_form1.SELECT.value;
 		m_inCount = 0;
 		wildcard_detect(postdata_from_user, m_stBomburl);
-		
+		if(IsUrlVaild==0 || IsPostdataVaild==0) {
+			return false;
+		} else {
+			
+		}
 		for(i = 0; i < m_ifFrame.length; i++)
 		{
 			try
@@ -534,6 +552,11 @@ function goBomb_nowild_GET_ONLY()
 		http_method = document.m_form1.SELECT.value;
 		m_inCount = 0;
 		wildcard_detect(postdata_from_user, m_stBomburl);
+		if(IsUrlVaild==0 || IsPostdataVaild==0) {
+			return false;
+		} else {
+			
+		}
 		if(http_method==1) {
 			attackmode="HTTP_GET/POST"
 			modeselect(2);
@@ -791,6 +814,11 @@ function goBomb_nowild_GET_ONLY()
 		http_method = document.m_form1.SELECT.value;
 		m_inCount = 0;
 		wildcard_detect(postdata_from_user, m_stBomburl);
+		if(IsUrlVaild==0 || IsPostdataVaild==0) {
+			return false;
+		} else {
+			
+		}
 		if(http_method==1) {
 			attackmode="HTTP_GET/POST"
 			modeselect(3);
@@ -1042,7 +1070,6 @@ function goBomb_fetch_nowild_POST_ONLY()
 		}
 	}
 
-post_input_disabler(ischecked);
 
 </script>
 
@@ -1153,7 +1180,7 @@ Wildcard:<input type="checkbox" name="wcc" title="チェックでワイルドカ
 【例】!!!はランダムな3桁の数字なのでaiueo!!!→aiueo364になる<br>
 対象URLやPOSTデータの欄で使用できます。<br>使う場合は□にチェックを入れてください。<br>※ワイルドカード機能を使うと少しスループットが低下します。<br>
 <br>
-<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。開始3はfetchを用いた田代。<br>多重起動可能ですがブラウザがクラッシュすることがあります。<br>強さは開始1＜開始2＜開始3<mark></strong>
+<strong><mark>開始1は従来の田代。開始2はXMLHttpRequestを用いた田代。開始3はfetchを用いた田代。<br>多重起動可能ですがブラウザがクラッシュすることがあります。<br>強さは開始1＜開始2＜開始3<br>モバイル端末は開始1がおすすめ。<mark></strong>
 <br><br>
 
 <input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()"> <br>
