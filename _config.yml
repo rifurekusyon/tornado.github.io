@@ -1,5 +1,7 @@
 name: tornado
-theme: minima
+theme: jekyll-theme-hacker
+plugins:
+  - jekyll-sitemap
 
 sitemap:
     path: sitemap.xml
