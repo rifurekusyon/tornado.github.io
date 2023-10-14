@@ -1,0 +1,11 @@
+# Site settings
+title: Tashiro cannon (tornado)
+author:
+  name: DNS rifu
+description: "Tashiro cannon (tornado)"
+
+# Build settings
+remote_theme: jekyll/minima
+
+plugins:
+  - jekyll-sitemap
