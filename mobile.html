@@ -1398,7 +1398,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 					<b>[POSTだけ]</b>
 					<br>
 					<li>サイトにデータを送るPOSTメソッドだけを使います。</li>
-					<li>※これ開始1には対応していません。</li>
+					<li>※開始1には対応していません。</li>
 					<b><font color="red">[注意]</font></b>
 					<br>
 					<b><mark>よく分からない場合はデフォルトを選択してください。</mark><b>
@@ -1521,7 +1521,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
         <ul>
           <b>[開始1]</b>
           <li>従来の田代（トルネード三式・乙）での方法で訪問します。</li>
-          <li>HTTP_GETには対応していません。</li>
+          <li>HTTP_POST ONLYモードには対応していません。</li>
           <li>モバイル端末に適しています。</li>
           <br>
           <b>[開始2]</b>
@@ -1531,6 +1531,8 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
           <b>[開始3]</b>
           <li>fetch apiを用いて訪問します。</li>
           <li>訪問速度で言えば一番高性能ですが上記の開始2と同じような制約を受けます。</li>
+	 <br> 
+	 <mark><b><font color="red">仕様上、開始2と開始3は開始1と違い訪問用の窓が開きません。</font></b></mark>
         </ul>
       </div>
     </details>
@@ -1548,31 +1550,31 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
       </summary>
       <div class="content">   
         <ul>
-        	<b>&lt; = a~z</b>
+        	<b>&lt;</b>
         	<br>
         	<li>[解説] 小文字のアルファベットa~zの中からランダム</li>
         	<br>
-        	<b>&gt; = A~Z</b>
+        	<b>&gt;</b>
         	<br>
         	<li>[解説] 大文字のアルファベットA~Zの中からランダム</li>
         	<br>
-        	<b>! = 0~9</b>
+        	<b>!</b>
         	<br>
         	<li>[解説] 0~9の整数中からランダム</li>
         	<br>
-        	<b>( = 0~f</b>
+        	<b>(</b>
         	<br>
         	<li>[解説] 小文字のアルファベットを含む16進数の中からランダム</li>
         	<br>
-        	<b>) = 0~F</b>
+        	<b>)</b>
         	<br>
         	<li>[解説] 大文字のアルファベットを含む16進数の中からランダム</li>
         	<br>
-        	<b>[0-1] = 0~1</b>
+        	<b>[0-1]</b>
         	<br>
         	<li>[解説] 0~1の中からランダム。例えば[3-5]とすれば3~5の中からランダム。</li>
         	<br>
-        	<b>\\ = bypass</b>
+        	<b>\\</b>
         	<br>
         	<li>[解説] \を入力したいとき。</li>
         	<br>
