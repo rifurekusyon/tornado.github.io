@@ -1070,6 +1070,52 @@ function goBomb_fetch_nowild_POST_ONLY()
 		}
 	}
 
+	var url_pingRequest, url_pingRequest2, RequestId, result, data_seikei
+	
+	function PingCheck() {
+		m_stBomburl = document.m_form1.m_tbUrl.value;
+		url_pingRequest = "https://check-host.net/check-ping?host=" + m_stBomburl + "&max_nodes=10";
+	fetch(url_pingRequest, {headers: {Accept: "application/json"}})
+    	.then(response => response.text())
+    	.then(data => {
+        const parsed = JSON.parse(data);
+        RequestId = parsed.request_id;
+        console.log(RequestId);
+        url_pingRequest2="https://check-host.net/check-result/" + RequestId;
+    });
+}
+	function GetPingResult() {
+	console.log("GetPingResult was loaded!");
+	fetch(url_pingRequest2, {headers: {Accept: "application/json"}})
+        .then(response => response.text())
+        .then(data => {
+        data_seikei = JSON.parse(data);
+	    result = JSON.stringify(data_seikei, null, '  ');
+		console.log(data);
+        console.log(result);
+        document.all.urlInfo.value += "\n\n";
+        document.all.urlInfo.value += result;
+    });
+
+	}
+
+	function HttpCheck() {
+		PingCheck();
+		console.log(url_pingRequest2);
+		GetPingResult();
+	}
+
+
+	function LogClear() {
+		var elem = document.getElementById("m_taInfo");
+		var elem2 = document.getElementById("urlInfo");
+		elem.innerText="";
+		elem2.innerText="";
+		document.all.urlInfo.value="";
+		document.all.urlInfo.value += "※PingCheckボタンを押すとここに対象サイトのPing応答結果がjson形式で出力されます。";
+		document.all.m_taInfo.value="";
+		document.all.m_taInfo.value += "※ここに情報が表示されます。";
+	}
 
 </script>
 
@@ -1313,8 +1359,8 @@ details[open] .summary_inner::after {
 <br><br>
 <b>[留意点]</b>
 <br>
-<mark>・WindowsではEdge、MacではSafari、他はchromeが一番高効率です。<br><font color="red">・httpsサイトのみ対応してます。</font></mark><br>・更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。<br><mark>ただし、極端な数値にするとクラッシュします。</mark></br>
-<b><mark><font color="red">[撃つ前に]</font></mark></b> <br><mark>・XMLHttpRequest/fetch APIを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windows・Macの方は下記の説明に従ってください。<strong>Android/ios</strong>でchrome/safariを使用している場合はそのまま撃てます。</mark></br>
+<mark>・WindowsではEdge、他はchromeが一番高効率です。<br><font color="red">・httpsサイトのみ対応してます。</font></mark><br>・更新間隔などの数値は既定値が最良です。うまく行かない場合は変えてください。<br><mark>ただし、極端な数値にするとクラッシュします。</mark></br>
+<b><mark><font color="red">[撃つ前に]</font></mark></b> <br><mark>・XMLHttpRequest/fetch APIを使用しているため使用中のブラウザでクロスドメイン制約を回避する必要があります。<br>Windowsの方はページ下記の説明に従ってください。<strong>Android/ios</strong>でchrome/safariを使用している場合はそのまま撃てます。</mark></br>
 <br>
 <div class="wrapper">
   <div class="wrapper_normalIcon">
@@ -1386,10 +1432,6 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 	</div>
   </div>
 
-<br>
-<b>[スマホ向けページ]</b>
-<br>
-<a href="https://rifurekusyon.github.io/tornado.github.io/mobile.html"><font color="green">&ltタブレットユーザ等表示が見にくい場合はこちら&gt</font></a>
 <br>
 <b>[その他の田代]</b>
 <br>
@@ -1630,6 +1672,27 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
   </div>
 </div>
 
+<div class="wrapper">
+	<div class="wrapper_normalIcon">
+  
+	  <details>
+		<summary>
+		  <span class="summary_inner">
+			[PingCheckボタンについて]<span class="icon"></span>
+		  </span>
+		</summary>
+		<div class="content">
+			<ul>
+			<li>webサイトのPing応答を確認できます。</li>
+			<li>Check-hostのAPIを使用しています。結果はjson形式で出力されます。</li>
+			<br>
+			<b><font color="red">※間をおいて二回ほど押さないと表示されません。また、nullと表示される場合、再読み込みの後時間をおいてもう一度試してください。</font></b>
+		  </ul>
+  </div>
+	  </details>
+	</div>
+  </div>
+  
 
 <br>
 <div style="text-align: center; padding: 10px; margin-bottom: 10px; border: 5px double #333333; border-radius: 10px; font-size: 15; background-color: black; opacity: 0.74;">
@@ -1650,7 +1713,9 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 <b>【対象URL】</b><br>
 Wildcard:<input type="checkbox" name="wcc_url" style="transform: scale(1.5);" title="チェックでワイルドカードを使用します。">
 <br>
-<input class="css-button-rounded--black" type="text" name="m_tbUrl" size=55 value="https://www.google.com"><br>
+<input class="css-button-rounded--black" type="text" name="m_tbUrl" size=55 value="https://www.google.com">
+<input class="css-button-rounded--black" type="button" value="PingCheck" style="color: yellow;" onclick="HttpCheck();">
+<br>
 
 <br>
 <b>【POSTデータ】</b><br>
@@ -1668,11 +1733,12 @@ Wildcard:<input type="checkbox" name="wcc" style="transform: scale(1.5);" title=
 <b>[発射ボタン]</b>
 <br>
 
-<input class="css-button-rounded--black" type="button" value="開始1" style="color: red;" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()"> <br>
-
-<br>
+<input class="css-button-rounded--black" type="button" value="開始1" style="color: lime;" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><br><input class="css-button-rounded--black" type="button" style="color: red;" value="中止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()">
+<input class="css-button-rounded--black" type="button" value="ログクリア" style="color: yellow;" onclick="LogClear();">
+<br><br>
 <b>【情報】</b><br>
 <textarea class="css-button-rounded--black" id="m_taInfo" style="border:1px solid #000000;height:200px;width:90%; font-size: 14; color: lime;">※ここに情報が表示されます。</textarea>
+<textarea class="css-button-rounded--black" id="urlInfo" style="border:1px solid #000000;height:200px;width:90%; font-size: 14; color: lime;">※PingCheckボタンを押すとここに対象サイトのPing応答結果がjson形式で出力されます。</textarea>
 </form>
 <div id="m_dvMado">
 </div>
