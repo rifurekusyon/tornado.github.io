@@ -1554,18 +1554,19 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
     <details>
       <summary>
         <span class="summary_inner">
-          [対象URLについて]<span class="icon"></span>
+          <font color="lime">[New][対象URLについて]</font><span class="icon"></span>
         </span>
       </summary>
       <div class="content">
 				<ul>
 					<li>訪問したいサイトのURLをhttpsから入力してください。</li>
-                    <li>複数行入力できます。同じサイト上にある複数のページurlを入力すると効果的です</li>
+                    <li>複数のURLを入力できます。訪問時にはその中のURLをすべて訪問します。同じサイト上にある複数のページurlを入力すると効果的です</li>
 				</ul>
                 <b>例: https://www.mokuhyo.comにa.htmlとb.htmlとc.htmlというページある場合次のように入力</b>
 				<b>https://www.mokuhyo.com/a.html</b>
 				<b>https://www.mokuhyo.com/b.html</b>
 				<b>https://www.mokuhyo.com/c.html</b>
+	      <ul><font color="red">注意: https://から始まるもの以外のものを入力したりURLの途中で改行しないでください</font></ul>
 			</div>
     </details>
   </div>
@@ -1782,7 +1783,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 	<input type="radio" style="transform: scale(1.5);" id="POSTONLY-MODE" name="SELECT" value="3" onclick="post_input_disabler(this.checked);">
 	<label for="inq3">POSTだけ</label>
 </p>
-<b>【対象URL】※複数行入力可能</b><br>
+<b>【対象URL】※複数のURL入力可能</b><br>
 Wildcard:<input type="checkbox" name="wcc_url" style="transform: scale(1.5);" title="チェックでワイルドカードを使用します。">
 <br>
 <textarea class="css-button-rounded--black" type="text" rows="30" cols="90" name="m_tbUrl" size="55">https://www.google.com
